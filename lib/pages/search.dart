@@ -6,7 +6,7 @@ import '../habr/api.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchPage extends StatefulWidget {
-  SearchPage({Key? key}) : super(key: key);
+  const SearchPage({super.key});
 
   @override
   createState() => _SearchPageState();

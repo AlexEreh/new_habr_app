@@ -9,10 +9,14 @@ abstract class PostInfo {
 }
 
 class Post implements PostInfo {
+  @override
   final String id;
+  @override
   final String title;
   final String body;
+  @override
   final DateTime publishDate;
+  @override
   final Author author;
 
   const Post({

@@ -15,7 +15,7 @@ ThemeData buildDarkTheme({
     primaryColor: Colors.blueGrey[600],
     scaffoldBackgroundColor: const Color.fromRGBO(57, 57, 57, 1),
     colorScheme:
-        ColorScheme.dark(secondary: Colors.grey, primary: Colors.blueGrey),
+        const ColorScheme.dark(secondary: Colors.grey, primary: Colors.blueGrey),
     visualDensity: VisualDensity.adaptivePlatformDensity,
     snackBarTheme: SnackBarThemeData(
       backgroundColor: Colors.blueGrey[400],

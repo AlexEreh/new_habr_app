@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -27,6 +28,7 @@ class IncrementallyLoadingListView extends StatefulWidget {
   /// This is relative to the bottom of the list and has a default value of 0 so that it loads when the last item within the list view scrolls into view.
   /// As an example, setting this to 1 would attempt to load more items when the second last item within the list view scrolls into view
   final int loadMoreOffsetFromBottom;
+  @override
   final Key? key;
   final Axis scrollDirection;
   final bool reverse;
@@ -73,11 +75,10 @@ class IncrementallyLoadingListView extends StatefulWidget {
       this.onLoadMore,
       this.onLoadMoreFinished});
 
-  IncrementallyLoadingListView.separated(
+  const IncrementallyLoadingListView.separated(
       {required this.hasMore,
       required this.loadMore,
       this.loadMoreOffsetFromBottom = 0,
-      this.key,
       this.useScrollbar = true,
       this.scrollDirection = Axis.vertical,
       this.reverse = false,
@@ -94,7 +95,7 @@ class IncrementallyLoadingListView extends StatefulWidget {
       this.addRepaintBoundaries = true,
       this.cacheExtent,
       this.onLoadMore,
-      this.onLoadMoreFinished});
+      this.onLoadMoreFinished, this.key});
 
   @override
   IncrementallyLoadingListViewState createState() {
@@ -149,7 +150,9 @@ class IncrementallyLoadingListViewState
     if (!_loadingMore! &&
         index == widget.itemCount() - widget.loadMoreOffsetFromBottom - 1 &&
         widget.hasMore()) {
-      print(index);
+      if (kDebugMode) {
+        print(index);
+      }
       loadMore();
     }
 
@@ -188,7 +191,7 @@ class IncrementallyLoadingListViewState
               case TargetPlatform.macOS:
               case TargetPlatform.windows:
                 return ScrollConfiguration(
-                  behavior: ScrollData(
+                  behavior: const ScrollData(
                     thinkness: 4,
                     isAlwaysShow: true,
                   ),
@@ -199,8 +202,8 @@ class IncrementallyLoadingListViewState
               case TargetPlatform.fuchsia:
               case TargetPlatform.iOS:
                 return Scrollbar(
-                  child: listview,
                   thickness: 4,
+                  child: listview,
                 );
             }
           }

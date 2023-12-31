@@ -2,7 +2,6 @@ import 'package:crypto/crypto.dart';
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:habr_app/utils/log.dart';
 
 import 'package:habr_app/utils/worker/worker.dart';
 

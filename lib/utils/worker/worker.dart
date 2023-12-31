@@ -16,7 +16,7 @@ class Worker {
   final String name;
   Completer<void>? initCompleter;
 
-  final _results = Map<int, Completer<dynamic>>();
+  final _results = <int, Completer<dynamic>>{};
   final _idGen = IdGenerator();
 
   Worker({required this.name});

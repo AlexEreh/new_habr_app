@@ -1,8 +1,14 @@
+import 'package:flutter/foundation.dart';
+
 void logError(Object e, [StackTrace? stackTrace]) {
-  print(e.toString());
+  if (kDebugMode) {
+    print(e.toString());
+  }
   if (stackTrace != null) print(stackTrace);
 }
 
 void logInfo(Object obj) {
-  print(obj);
+  if (kDebugMode) {
+    print(obj);
+  }
 }

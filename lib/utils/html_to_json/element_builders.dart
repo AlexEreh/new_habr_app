@@ -93,6 +93,7 @@ class Code implements Node {
 enum ListType { unordered, ordered }
 
 class BlockList implements NodeChildren {
+  @override
   List<Node> children;
   ListType listType;
 
@@ -104,6 +105,7 @@ class BlockList implements NodeChildren {
 
 class Details implements NodeChild {
   String title;
+  @override
   Node child;
 
   Details(this.title, this.child);
@@ -113,6 +115,7 @@ class Details implements NodeChild {
 }
 
 class Scrollable implements NodeChild {
+  @override
   Node child;
 
   Scrollable(this.child);
@@ -122,6 +125,7 @@ class Scrollable implements NodeChild {
 }
 
 class BlockColumn implements NodeChildren {
+  @override
   List<Node> children;
 
   BlockColumn(this.children);
@@ -131,6 +135,7 @@ class BlockColumn implements NodeChildren {
 }
 
 class BlockQuote implements NodeChild {
+  @override
   Node child;
 
   BlockQuote(this.child);

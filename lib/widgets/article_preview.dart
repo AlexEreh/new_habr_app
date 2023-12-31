@@ -13,23 +13,24 @@ class ArticlePreview extends StatelessWidget {
   final bool? showHtml;
   final Function(String articleId)? onPressed;
 
-  ArticlePreview({
-    Key? key,
+  const ArticlePreview({
+    super.key,
     required this.postPreview,
     this.showHtml,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     final needShowHtml =
         showHtml ?? context.watch<AppSettings>().showPreviewText;
-    final upIconTextStyle = const TextStyle(fontSize: 15);
-    final statisticIconTextStyle = const TextStyle(fontSize: 15);
+    const upIconTextStyle = TextStyle(fontSize: 15);
+    const statisticIconTextStyle = TextStyle(fontSize: 15);
     return InkWell(
       child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -94,7 +95,6 @@ class ArticlePreview extends StatelessWidget {
                 ],
               )
             ],
-            crossAxisAlignment: CrossAxisAlignment.start,
           )),
       onLongPress: () {}, // TODO: Настройки поста при долгом нажатии
       onTap: () => onPressed?.call(postPreview.id),

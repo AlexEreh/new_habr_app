@@ -18,8 +18,8 @@ class HtmlView extends StatelessWidget {
   final bool imagesWithPadding;
   final EdgeInsets? padding;
 
-  HtmlView(
-    this.node, {
+  const HtmlView(
+    this.node, {super.key,
     this.textAlign,
     this.imagesWithPadding = true,
     this.padding,
@@ -28,6 +28,7 @@ class HtmlView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: inlineTree(
         node,
         context,
@@ -37,12 +38,11 @@ class HtmlView extends StatelessWidget {
           padding: padding,
         ),
       ).toList(),
-      crossAxisAlignment: CrossAxisAlignment.stretch,
     );
   }
 
   HtmlView.unparsed(
-    String? html, {
+    String? html, {super.key,
     this.textAlign,
     this.imagesWithPadding = false,
     this.padding,
@@ -113,8 +113,8 @@ Widget? buildTree(
     widget = wrapPadding(widget, params);
   } else if (element is view.Scrollable) {
     widget = SingleChildScrollView(
-      child: buildTree(element.child, context, params),
       scrollDirection: Axis.horizontal,
+      child: buildTree(element.child, context, params),
     );
   } else if (element is view.Image) {
     widget = Picture.network(
@@ -123,15 +123,15 @@ Widget? buildTree(
     );
     if (element.caption != null) {
       widget = WrappedContainer(
+        distance: 5,
         children: [
           widget,
           wrapPadding(
             Text(element.caption!,
-                style: Theme.of(context).textTheme.subtitle2),
+                style: Theme.of(context).textTheme.titleSmall),
             params,
           ),
         ],
-        distance: 5,
       );
     }
     if (params.imagesWithPadding) {
@@ -201,21 +201,21 @@ Widget? buildTree(
   } else if (element is view.Table) {
     try {
       widget = Table(
-        defaultColumnWidth: IntrinsicColumnWidth(),
+        defaultColumnWidth: const IntrinsicColumnWidth(),
         border: TableBorder.all(
-            color: Theme.of(context).textTheme.bodyText2!.color!),
+            color: Theme.of(context).textTheme.bodyMedium!.color!),
         children: element.rows
             .map((row) => TableRow(
                 children: row
                     .map((child) => TableCell(
                         child: Padding(
-                            padding: EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(5),
                             child: buildTree(child, context, params))))
                     .toList()))
             .toList(),
       );
     } catch (err) {
-      widget = Text("Unsupported table");
+      widget = const Text("Unsupported table");
     }
     widget = wrapPadding(widget, params);
   } else {
@@ -229,7 +229,7 @@ InlineSpan buildInline(
     view.Span element, BuildContext context, BuildParams params) {
   late InlineSpan span;
   if (element is view.TextSpan) {
-    var style = TextStyle();
+    var style = const TextStyle();
     for (final mode in element.modes) {
       if (mode == 'bold' || mode == 'strong') {
         style = style.copyWith(fontWeight: FontWeight.w500);
@@ -260,7 +260,7 @@ Iterable<Widget> inlineTree(
     for (int i = 0; i < children.length; i++) {
       final item = children[i];
       yield* inlineTree(item, context, params);
-      if (i != children.length - 1) yield SizedBox(height: 20);
+      if (i != children.length - 1) yield const SizedBox(height: 20);
     }
   } else if (element is view.BlockList) {
     for (final item in element.children) {

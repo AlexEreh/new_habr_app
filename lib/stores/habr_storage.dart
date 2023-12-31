@@ -40,7 +40,7 @@ class HabrStorage {
         cachedPost != null ? await authors.get(cachedPost.authorId) : null;
     return Either.condLazy(
       cachedPost != null && cachedAuthor != null,
-      () => AppError(
+      () => const AppError(
           errCode: ErrorType.NotFound,
           message: "Article not found in local storage"),
       () => Post(
@@ -81,7 +81,7 @@ class HabrStorage {
         .map((comment) => comment.author?.id ?? '')
         .toSet();
     final cachedAuthors =
-        await Future.wait(authorsId.map((e) => this.authors.get(e))).then(
+        await Future.wait(authorsId.map((e) => authors.get(e))).then(
             (value) => value.where((element) => element != null).toList());
     final authorById = Map.fromEntries(
         cachedAuthors.map((value) => MapEntry(value!.id, value)));
@@ -100,7 +100,7 @@ class HabrStorage {
 
   Future<Either<AppError, PostPreviews>> cachedPosts({int page = 1}) async {
     final cachedPosts = await Future.wait(
-        this.articles.keys.map(this.articles.get).toList(growable: false));
+        articles.keys.map(articles.get).toList(growable: false));
     cachedPosts.sort((a, b) => a!.insertDate.compareTo(b!.insertDate));
     final cachedAuthors = await Future.wait(
         cachedPosts.map((post) => authors.get(post!.authorId)));
@@ -116,7 +116,7 @@ class HabrStorage {
           flows: [],
           title: post.title,
           publishDate: post.publishDate,
-          statistics: Statistics.zero(),
+          statistics: const Statistics.zero(),
           author: author,
         );
       }).toList(),
@@ -143,8 +143,9 @@ class HabrStorage {
   }
 
   Future _cacheArticle(Post post) async {
-    if (await authors.get(post.author.id) == null)
+    if (await authors.get(post.author.id) == null) {
       await _cacheAuthor(post.author);
+    }
     await articles.put(
         post.id,
         CachedPost(

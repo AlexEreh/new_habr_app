@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoadAppBarTitle extends StatefulWidget {
+  const LoadAppBarTitle({super.key});
+
   @override
   State<StatefulWidget> createState() => _LoadAppBarTitleState();
 }
@@ -44,7 +46,7 @@ class _LoadAppBarTitleState extends State<LoadAppBarTitle>
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).primaryTextTheme.headline6!.color!;
+    final color = Theme.of(context).primaryTextTheme.titleLarge!.color!;
     final loadingText = AppLocalizations.of(context)!.loading;
     return Text.rich(
       TextSpan(children: [

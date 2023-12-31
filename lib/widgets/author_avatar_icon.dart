@@ -15,15 +15,15 @@ class AuthorAvatarIcon extends StatelessWidget {
   final AuthorAvatarInfo? avatar;
   final Color? defaultColor;
 
-  AuthorAvatarIcon({
+  const AuthorAvatarIcon({
     required this.avatar,
     this.height = 20,
     this.width = 20,
     this.defaultColor,
     this.borderWidth = 1.0,
     this.radius = 5,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

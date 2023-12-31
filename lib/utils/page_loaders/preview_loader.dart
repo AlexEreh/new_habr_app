@@ -10,6 +10,7 @@ import 'page_loader.dart';
 export 'page_loader.dart';
 
 class CachedPreviewLoader extends FlowPreviewLoader {
+  @override
   final HabrStorage storage;
   CachedPreviewLoader({required this.storage})
       : super(flow: PostsFlow.saved, storage: storage);
@@ -21,6 +22,7 @@ class FlowPreviewLoader extends PageLoader<Either<AppError, PostPreviews>> {
 
   FlowPreviewLoader({required this.flow, required this.storage});
 
+  @override
   Future<Either<AppError, PostPreviews>> load(int page) {
     return storage.posts(page: page, flow: flow);
   }
@@ -34,6 +36,7 @@ class SearchLoader extends PageLoader<Either<AppError, PostPreviews>> {
       : query = info.query,
         order = info.order;
 
+  @override
   Future<Either<AppError, PostPreviews>> load(int page) {
     return Habr().findPosts(query, page: page, order: order);
   }

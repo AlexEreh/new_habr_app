@@ -30,16 +30,16 @@ TextSpan InlineTextLink(
 class TextLink extends StatelessWidget {
   final String title;
   final String? url;
-  const TextLink({required this.title, required this.url});
+  const TextLink({super.key, required this.title, required this.url});
 
   @override
   Widget build(BuildContext context) {
     return Link(
+      url: url,
       child: Text(
         title,
         style: linkTextStyleFrom(context),
       ),
-      url: url,
     );
   }
 }

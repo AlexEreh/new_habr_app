@@ -9,7 +9,7 @@ import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class BookmarksArticlesList extends StatefulWidget {
-  BookmarksArticlesList({Key? key}) : super(key: key);
+  const BookmarksArticlesList({super.key});
 
   @override
   createState() => _BookmarksArticlesListState();
@@ -22,7 +22,7 @@ class _BookmarksArticlesListState extends State<BookmarksArticlesList> {
       BuildContext context, PostPreview preview, HabrStorage habrStorage) {
     return SlidableArchiveDelete(
       child: ArticlePreview(
-        key: Key("preview_" + preview.id),
+        key: Key("preview_${preview.id}"),
         postPreview: preview,
         onPressed: (articleId) => openArticle(context, articleId),
       ),
@@ -41,7 +41,7 @@ class _BookmarksArticlesListState extends State<BookmarksArticlesList> {
       builder: (context, box, _) {
         final habrStorage = context.watch<HabrStorage>();
         final bookmarks = box.values.toList();
-        if (bookmarks.isEmpty) return Center(child: EmptyContent());
+        if (bookmarks.isEmpty) return const Center(child: EmptyContent());
         return ListView.separated(
             itemBuilder: (context, i) => DefaultConstraints(
                 child: buildItem(context, bookmarks[i], habrStorage)),

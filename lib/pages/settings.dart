@@ -7,17 +7,21 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(AppLocalizations.of(context)!.settings),
         ),
-        body: Settings());
+        body: const Settings());
   }
 }
 
 class Settings extends StatelessWidget {
+  const Settings({super.key});
+
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<AppSettings>();
@@ -28,8 +32,8 @@ class Settings extends StatelessWidget {
     final lightCodeTheme = settings.lightCodeTheme;
     final darkCodeTheme = settings.darkCodeTheme;
     final fontSize = settings.fontSize;
-    final TextAlign? textAlignArticle = settings.articleTextAlign;
-    final TextAlign? textAlignComments = settings.commentTextAlign;
+    final TextAlign textAlignArticle = settings.articleTextAlign;
+    final TextAlign textAlignComments = settings.commentTextAlign;
     final double lineSpacing = settings.lineSpacing;
 
     return ListView(
@@ -65,13 +69,13 @@ class Settings extends StatelessWidget {
                         : null, // Switch будет неактивен при Null
               ),
               SwitchListTile(
-                title: Text('Смена темы по времени'),
-                subtitle: Text('Укажите время светлой темы'),
+                title: const Text('Смена темы по времени'),
+                subtitle: const Text('Укажите время светлой темы'),
                 value: settings.timeThemeSwitcher,
                 onChanged: (val) => settings.timeThemeSwitcher = val,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 15, bottom: 10),
+                padding: const EdgeInsets.only(left: 15, bottom: 10),
                 child: Row(
                   children: [
                     TimeOfDayPickerButton(
@@ -101,7 +105,7 @@ class Settings extends StatelessWidget {
                 title: Text(AppLocalizations.of(context)!.customization),
               ),
               SwitchListTile(
-                title: Text('Использовать расширенный вид ленты'),
+                title: const Text('Использовать расширенный вид ленты'),
                 value: settings.showPreviewText,
                 onChanged: (val) => settings.showPreviewText = val,
               ),
@@ -137,7 +141,7 @@ class Settings extends StatelessWidget {
                   TextAlign.justify: AppLocalizations.of(context)!.fullWidth,
                 },
                 leading: const Icon(Icons.format_align_left),
-                title: Text("Выравнивание текста в постах"),
+                title: const Text("Выравнивание текста в постах"),
                 defaultKey: textAlignArticle,
                 onChanged: (dynamic val) => settings.articleTextAlign = val,
               ),
@@ -149,7 +153,7 @@ class Settings extends StatelessWidget {
                   TextAlign.justify: AppLocalizations.of(context)!.fullWidth,
                 },
                 leading: const Icon(Icons.format_align_left),
-                title: Text("Выравнивание текста в комментариях"),
+                title: const Text("Выравнивание текста в комментариях"),
                 defaultKey: textAlignComments,
                 onChanged: (dynamic val) => settings.commentTextAlign = val,
               ),
@@ -218,14 +222,14 @@ class Settings extends StatelessWidget {
               DropDownListTile(
                 values: Map.fromIterables(
                     HighlightCode.themes, HighlightCode.themes),
-                title: Text("Стиль темной темы"),
+                title: const Text("Стиль темной темы"),
                 defaultKey: darkCodeTheme,
                 onChanged: (dynamic val) => settings.darkCodeTheme = val,
               ),
               DropDownListTile(
                 values: Map.fromIterables(
                     HighlightCode.themes, HighlightCode.themes),
-                title: Text("Стиль светлой темы"),
+                title: const Text("Стиль светлой темы"),
                 defaultKey: lightCodeTheme,
                 onChanged: (dynamic val) => settings.lightCodeTheme = val,
               ),
@@ -243,8 +247,8 @@ class TimeOfDayPickerButton extends StatelessWidget {
   final TimeOfDay? timeOfDay;
   final void Function(TimeOfDay value) onChange;
 
-  TimeOfDayPickerButton(
-      {required this.timeOfDay,
+  const TimeOfDayPickerButton(
+      {super.key, required this.timeOfDay,
       required this.onChange,
       this.label,
       this.active});
@@ -253,16 +257,16 @@ class TimeOfDayPickerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final strTime = timeOfDay!.format(context);
     return OutlinedButton(
-      child: Text(label == null ? strTime : '$label $strTime'),
       onPressed: (active ?? true)
           ? () async {
               final nextTime = await showTimePicker(
                   context: context, initialTime: timeOfDay!);
               if (nextTime != null) {
-                this.onChange(nextTime);
+                onChange(nextTime);
               }
             }
           : null,
+      child: Text(label == null ? strTime : '$label $strTime'),
     );
   }
 }

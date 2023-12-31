@@ -16,9 +16,8 @@ class Picture extends StatelessWidget {
   final double? height;
   final double? width;
 
-  Picture.network(this.url,
-      {this.clickable = false, this.height, this.width, Key? key})
-      : super(key: key);
+  const Picture.network(this.url,
+      {this.clickable = false, this.height, this.width, super.key});
 
   // TODO: make asset constructor
   // Picture.asset(
@@ -88,11 +87,9 @@ class Picture extends StatelessWidget {
           ),
         );
       },
-      child: Container(
-        child: Hero(
-          tag: heroTag,
-          child: child,
-        ),
+      child: Hero(
+        tag: heroTag,
+        child: child,
       ),
     );
   }

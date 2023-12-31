@@ -6,7 +6,7 @@ class EmptyContent extends StatelessWidget {
   final double pictureHeight;
   final double pictureWidth;
 
-  const EmptyContent({this.pictureHeight = 150, this.pictureWidth = 100});
+  const EmptyContent({super.key, this.pictureHeight = 150, this.pictureWidth = 100});
 
   @override
   Widget build(BuildContext context) {

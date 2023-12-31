@@ -9,14 +9,14 @@ class Statistics extends StatelessWidget {
   final TextStyle? textStyle;
   final ValueToStringTransformer valueToStringTransformer;
 
-  const Statistics.widget({
+  const Statistics.widget({super.key,
     required this.value,
     required this.leading,
     this.textStyle,
     ValueToStringTransformer? valueTransformer,
   }) : valueToStringTransformer = valueTransformer ?? intToMetricPrefix;
 
-  Statistics.icon({
+  Statistics.icon({super.key,
     required IconData iconData,
     required this.value,
     double size = 20,
@@ -29,7 +29,7 @@ class Statistics extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(children: [
       leading,
-      SizedBox(
+      const SizedBox(
         width: 5,
       ),
       Text(
@@ -44,7 +44,7 @@ class StatisticsFavoritesIcon extends StatelessWidget {
   final int favorites;
   final TextStyle? textStyle;
 
-  StatisticsFavoritesIcon(this.favorites, {this.textStyle});
+  const StatisticsFavoritesIcon(this.favorites, {super.key, this.textStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,7 @@ class StatisticsScoreIcon extends StatelessWidget {
     return color!;
   }
 
-  StatisticsScoreIcon(this.score, {this.textStyle});
+  const StatisticsScoreIcon(this.score, {super.key, this.textStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,7 @@ class StatisticsScoreIcon extends StatelessWidget {
       textStyle: textStyle!.copyWith(color: scoreToColor(score)),
       valueTransformer: (value) {
         String res = intToMetricPrefix(value);
-        if (value > 0) res = '+' + res;
+        if (value > 0) res = '+$res';
         return res;
       },
     );
@@ -97,7 +97,7 @@ class StatisticsViewsIcon extends StatelessWidget {
   final int views;
   final TextStyle? textStyle;
 
-  StatisticsViewsIcon(this.views, {this.textStyle});
+  const StatisticsViewsIcon(this.views, {super.key, this.textStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +113,7 @@ class StatisticsCommentsIcon extends StatelessWidget {
   final int comments;
   final TextStyle? textStyle;
 
-  StatisticsCommentsIcon(this.comments, {this.textStyle});
+  const StatisticsCommentsIcon(this.comments, {super.key, this.textStyle});
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class LossInternetConnection extends StatelessWidget {
   final VoidCallback onPressReload;
 
-  const LossInternetConnection({required this.onPressReload});
+  const LossInternetConnection({super.key, required this.onPressReload});
 
   @override
   Widget build(BuildContext context) {

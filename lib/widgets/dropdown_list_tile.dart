@@ -8,7 +8,7 @@ class DropDownListTile<Key> extends StatelessWidget {
   final Widget? trailing;
   final Widget? leading;
 
-  DropDownListTile({
+  DropDownListTile({super.key,
     required Map<Key, String> values,
     required this.title,
     this.trailing,

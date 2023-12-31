@@ -10,7 +10,7 @@ import 'package:habr_app/widgets/link.dart';
 class MediumAuthorPreview extends StatelessWidget {
   final Author author;
 
-  MediumAuthorPreview(this.author);
+  const MediumAuthorPreview(this.author, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +30,10 @@ class MediumAuthorPreview extends StatelessWidget {
                 AvatarColorStore().getColor(author.alias, theme.brightness),
           ),
         ),
-        SizedBox(width: 15),
+        const SizedBox(width: 15),
         Expanded(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text.rich(
                 TextSpan(children: [
@@ -53,7 +54,6 @@ class MediumAuthorPreview extends StatelessWidget {
               ),
               Text(author.speciality ?? AppLocalizations.of(context)!.user),
             ],
-            crossAxisAlignment: CrossAxisAlignment.start,
           ),
         ),
       ],

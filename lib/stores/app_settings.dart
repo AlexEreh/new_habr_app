@@ -66,9 +66,9 @@ class AppSettings extends ChangeNotifier {
 
   static bool needSetLightTheme(
       TimeOfDay current, TimeOfDay from, TimeOfDay to) {
-    final timeLower = (TimeOfDay d1, TimeOfDay d2) =>
+    timeLower(TimeOfDay d1, TimeOfDay d2) =>
         d1.hour < d2.hour || (d1.hour == d2.hour && d1.minute <= d2.minute);
-    final timeHigherOrEqual = (TimeOfDay d1, TimeOfDay d2) =>
+    timeHigherOrEqual(TimeOfDay d1, TimeOfDay d2) =>
         d1.hour > d2.hour || (d1.hour == d2.hour && d1.minute >= d2.minute);
     if (timeHigherOrEqual(to, from)) {
       return timeHigherOrEqual(current, from) && timeLower(current, to);

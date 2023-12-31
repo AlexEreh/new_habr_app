@@ -53,7 +53,7 @@ class ImageLocalStorage {
     final loaded = await imageLoader!.loadImage(url, filename);
 
     if (!loaded) {
-      return Left(AppError(
+      return const Left(AppError(
         errCode: ErrorType.NotCached,
         message: 'img not loaded',
       ));
@@ -66,7 +66,7 @@ class ImageLocalStorage {
       // оно загрузилось несколько раз
       // повторный файл не нужен, поэтому его можно удалить
       File(filename).delete();
-      return Left(AppError(
+      return const Left(AppError(
         errCode: ErrorType.NotCached,
         message: "img url exist in cache",
       ));

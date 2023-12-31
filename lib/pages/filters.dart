@@ -10,6 +10,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:tuple_dart/tuple.dart';
 
 class FiltersPage extends StatefulWidget {
+  const FiltersPage({super.key});
+
   @override
   State<StatefulWidget> createState() => _FiltersPageState();
 }
@@ -23,8 +25,8 @@ class _FiltersPageState extends State<FiltersPage> {
       ),
       body: _buildBody(),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
         onPressed: _createFilterDialog,
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -40,7 +42,7 @@ class _FiltersPageState extends State<FiltersPage> {
 
   Widget _buildBody() {
     final filtersStore = FiltersStorage();
-    final removeFilter = (int i) => () => filtersStore.removeFilterAt(i);
+    removeFilter(int i) => () => filtersStore.removeFilterAt(i);
     return ValueListenableBuilder<Box<Filter<PostPreview>>>(
       valueListenable: filtersStore.listenable(),
       builder: (context, box, child) {
@@ -133,7 +135,7 @@ class FiltersGroup<FilterT extends Filter<PostPreview>>
   final Widget Function(FilterT) titleBuilder;
   final void Function() Function(int) onRemoveBuilder;
 
-  FiltersGroup({
+  const FiltersGroup({super.key,
     required this.filters,
     required this.leading,
     required this.titleBuilder,
@@ -251,7 +253,7 @@ class _CompanyNameFilterDialogState extends State<_CompanyNameFilterDialog> {
             child: TextField(
               controller: nickanameControll,
               autofocus: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Имя компании",
                 hintText: "Например, RUVDS.com",
               ),

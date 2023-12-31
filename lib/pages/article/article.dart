@@ -14,7 +14,6 @@ import 'package:habr_app/utils/date_to_text.dart';
 import 'package:habr_app/widgets/widgets.dart';
 import 'package:habr_app/routing/routing.dart';
 import 'package:share/share.dart';
-import 'package:habr_app/models/post.dart';
 import 'package:habr_app/app_error.dart';
 import 'package:habr_app/pages/article/components/post_store.dart';
 import 'package:habr_app/widgets/scroll_data.dart';
@@ -22,7 +21,7 @@ import 'package:habr_app/widgets/scroll_data.dart';
 class ArticlePage extends StatefulWidget {
   final String articleId;
 
-  ArticlePage({Key? key, required this.articleId}) : super(key: key);
+  const ArticlePage({super.key, required this.articleId});
 
   @override
   createState() => _ArticlePageState();
@@ -53,7 +52,7 @@ class _ArticlePageState extends State<ArticlePage> {
     String? title;
     switch (store.loadingState) {
       case LoadingState.inProgress:
-        return LoadAppBarTitle();
+        return const LoadAppBarTitle();
       case LoadingState.isFinally:
         title = store.post!.title;
         break;
@@ -72,7 +71,7 @@ class _ArticlePageState extends State<ArticlePage> {
   Widget buildBody(BuildContext context, PostStorage postStorage) {
     switch (postStorage.loadingState) {
       case LoadingState.inProgress:
-        return const Center(child: const CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       case LoadingState.isFinally:
         return ArticleView(
           article: postStorage.post,
@@ -81,7 +80,7 @@ class _ArticlePageState extends State<ArticlePage> {
       case LoadingState.isCorrupted:
         switch (postStorage.lastError.errCode) {
           case ErrorType.ServerError:
-            return const Center(child: const LotOfEntropy());
+            return const Center(child: LotOfEntropy());
           default:
             return Center(
               child: LossInternetConnection(
@@ -153,9 +152,9 @@ class _ArticlePageState extends State<ArticlePage> {
               HideFloatingActionButton(
             tooltip: AppLocalizations.of(context)!.comments,
             visible: value,
-            child: const Icon(Icons.chat_bubble_outline),
             onPressed: () => openCommentsPage(context, articleId),
             duration: const Duration(milliseconds: 300),
+            child: const Icon(Icons.chat_bubble_outline),
           ),
         ),
       ),
@@ -171,7 +170,7 @@ class _ArticlePageState extends State<ArticlePage> {
         title: post.title,
         flows: [],
         publishDate: post.publishDate,
-        statistics: Models.Statistics.zero(),
+        statistics: const Models.Statistics.zero(),
         author: post.author,
       );
       BookmarksStore().addBookmark(articleId, position, preview);
@@ -192,8 +191,9 @@ class _ArticlePageState extends State<ArticlePage> {
   void floatingButtonShowListener() {
     final needShow =
         _controller!.position.userScrollDirection == ScrollDirection.forward;
-    if (needShow != showFloatingActionButton.value)
+    if (needShow != showFloatingActionButton.value) {
       showFloatingActionButton.value = needShow;
+    }
   }
 
   @override
@@ -215,7 +215,7 @@ class MoreButtons {
 class ArticleInfo extends StatelessWidget {
   final PostInfo? article;
 
-  const ArticleInfo({this.article});
+  const ArticleInfo({super.key, this.article});
 
   @override
   Widget build(BuildContext context) {
@@ -223,6 +223,7 @@ class ArticleInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
                 child: Text(dateToStr(
@@ -232,14 +233,13 @@ class ArticleInfo extends StatelessWidget {
               onTap: () => openUser(context, article!.author.alias),
             ),
           ],
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
         ),
         const SizedBox(
           height: 7,
         ),
         Text(
           article!.title,
-          style: TextStyle(fontSize: 24),
+          style: const TextStyle(fontSize: 24),
           textAlign: TextAlign.center,
         ),
       ],
@@ -251,7 +251,7 @@ class ArticleView extends StatelessWidget {
   final ParsedPost? article;
   final ScrollController? controller;
 
-  const ArticleView({this.article, this.controller});
+  const ArticleView({super.key, this.article, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -265,12 +265,12 @@ class ArticleView extends StatelessWidget {
         child: Column(
           children: [
             Padding(
+              padding: padding,
               child: ArticleInfo(
                 article: article,
               ),
-              padding: padding,
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             HtmlView(
@@ -279,7 +279,7 @@ class ArticleView extends StatelessWidget {
               imagesWithPadding: false,
               padding: padding,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             InkWell(
@@ -289,14 +289,14 @@ class ArticleView extends StatelessWidget {
               onTap: () =>
                   openUser(context, article!.author.alias), // open user page
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Padding(
+              padding: padding,
               child: CommentsButton(
                 onPressed: () => openCommentsPage(context, article!.id),
               ),
-              padding: padding,
             ),
           ],
         ),

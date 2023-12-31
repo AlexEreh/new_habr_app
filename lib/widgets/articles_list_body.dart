@@ -16,6 +16,9 @@ import 'circular_item.dart';
 import 'article_preview.dart';
 
 class ArticlesListBody extends StatelessWidget {
+  const ArticlesListBody({super.key});
+
+  @override
   Widget build(BuildContext context) {
     return Consumer<ArticlesStorage>(
       builder: (context, store, _) => _build(store)!,
@@ -28,15 +31,16 @@ class ArticlesListBody extends StatelessWidget {
       case LoadingState.isFinally:
         widget = IncrementallyLoadingListView(
           itemBuilder: (context, index) {
-            if (index >= store.previews.length && store.loadItems)
+            if (index >= store.previews.length && store.loadItems) {
               return const Center(child: CircularItem());
+            }
             final preview = store.previews[index];
             final habrStorage =
                 Provider.of<HabrStorage>(context, listen: false);
             return DefaultConstraints(
                 child: SlidableArchive(
               child: ArticlePreview(
-                key: ValueKey("preview_" + preview.id),
+                key: ValueKey("preview_${preview.id}"),
                 postPreview: preview,
                 onPressed: (articleId) => openArticle(context, articleId),
               ),
@@ -53,12 +57,12 @@ class ArticlesListBody extends StatelessWidget {
         );
         break;
       case LoadingState.inProgress:
-        widget = Center(child: CircularProgressIndicator());
+        widget = const Center(child: CircularProgressIndicator());
         break;
       case LoadingState.isCorrupted:
         switch (store.lastError!.errCode) {
           case ErrorType.ServerError:
-            widget = const Center(child: const LotOfEntropy());
+            widget = const Center(child: LotOfEntropy());
             break;
           default:
             widget = Center(

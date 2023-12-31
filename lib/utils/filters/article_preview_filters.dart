@@ -9,8 +9,8 @@ class NicknameAuthorFilter extends Filter<PostPreview> {
   const NicknameAuthorFilter(this.nickname);
 
   @override
-  bool filter(PostPreview postPreview) {
-    return nickname == postPreview.author.alias;
+  bool filter(PostPreview obj) {
+    return nickname == obj.author.alias;
   }
 }
 
@@ -33,9 +33,9 @@ class CompanyNameFilter extends Filter<PostPreview> {
   const CompanyNameFilter(this.companyName);
 
   @override
-  bool filter(PostPreview postPreview) {
+  bool filter(PostPreview obj) {
     final l = companyName.toLowerCase();
-    return postPreview.hubs
+    return obj.hubs
             ?.any((element) => element.toLowerCase().contains(l)) ??
         false;
   }

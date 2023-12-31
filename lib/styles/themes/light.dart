@@ -10,7 +10,7 @@ ThemeData buildLightTheme({
       primarySwatch: Colors.blueGrey,
       primaryColor: Colors.blueGrey,
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      snackBarTheme: SnackBarThemeData(
+      snackBarTheme: const SnackBarThemeData(
           backgroundColor: Colors.blueGrey
       )
   );

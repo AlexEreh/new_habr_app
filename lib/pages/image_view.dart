@@ -3,7 +3,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:flutter/material.dart';
 
 class HeroPhotoViewRouteWrapper extends StatelessWidget {
-  const HeroPhotoViewRouteWrapper({
+  const HeroPhotoViewRouteWrapper({super.key,
     this.imageProvider,
     this.backgroundDecoration,
     this.minScale,
@@ -34,14 +34,12 @@ class HeroPhotoViewRouteWrapper extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
-        body: Container(
-          child: PhotoView(
-            imageProvider: imageProvider,
-            backgroundDecoration: backgroundDecoration as BoxDecoration?,
-            minScale: minScale,
-            maxScale: maxScale,
-            heroAttributes: PhotoViewHeroAttributes(tag: tag),
-          ),
+        body: PhotoView(
+          imageProvider: imageProvider,
+          backgroundDecoration: backgroundDecoration as BoxDecoration?,
+          minScale: minScale,
+          maxScale: maxScale,
+          heroAttributes: PhotoViewHeroAttributes(tag: tag),
         ),
       ),
     );

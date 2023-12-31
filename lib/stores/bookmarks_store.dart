@@ -13,7 +13,9 @@ class BookmarksStore {
   }
 
   void removeBookmark(String? postId) {
-    print(postId);
+    if (kDebugMode) {
+      print(postId);
+    }
     bookmarksBox.delete(postId);
     bookmarkedBox.delete(postId);
   }

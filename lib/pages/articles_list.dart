@@ -10,7 +10,7 @@ import 'package:habr_app/stores/habr_storage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ArticlesList extends StatelessWidget {
-  ArticlesList({Key? key}) : super(key: key);
+  const ArticlesList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class ArticlesList extends StatelessWidget {
     return Scaffold(
       drawer: drawerIsPartOfBody ? null : MainMenu(),
       appBar: AppBar(
-        title: Text("Habr"),
+        title: const Text("Habr"),
         actions: [
           IconButton(
               tooltip: AppLocalizations.of(context)!.search,
@@ -37,7 +37,7 @@ class ArticlesList extends StatelessWidget {
         child: Row(
           children: [
             if (drawerIsPartOfBody) DesktopHomeMenu(),
-            Expanded(child: ArticlesListBody()),
+            const Expanded(child: ArticlesListBody()),
           ],
         ),
       ),

@@ -20,7 +20,7 @@ import 'package:habr_app/utils/date_to_text.dart';
 class UserPage extends StatelessWidget {
   final String username;
 
-  UserPage({required this.username});
+  const UserPage({super.key, required this.username});
 
   @override
   Widget build(BuildContext context) {
@@ -28,27 +28,29 @@ class UserPage extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(
               create: (_) =>
-                  ArticlesStorage(UserPreviewsLoader(this.username))),
+                  ArticlesStorage(UserPreviewsLoader(username))),
           ChangeNotifierProvider(create: (_) {
-            final store = UserInfoStorage(this.username);
+            final store = UserInfoStorage(username);
             store.loadInfo();
             return store;
           }),
         ],
         child: Scaffold(
-          appBar: AppBar(title: UserAppBarTitle()),
-          body: UserBody(),
+          appBar: AppBar(title: const UserAppBarTitle()),
+          body: const UserBody(),
         ));
   }
 }
 
 class UserAppBarTitle extends StatelessWidget {
+  const UserAppBarTitle({super.key});
+
   Widget buildTitle(BuildContext context, UserInfoStorage store) {
     String? title;
     final userLoading = store.loadingState;
     switch (userLoading) {
       case LoadingState.inProgress:
-        return LoadAppBarTitle();
+        return const LoadAppBarTitle();
       case LoadingState.isFinally:
         title = store.username;
         break;
@@ -61,6 +63,7 @@ class UserAppBarTitle extends StatelessWidget {
     return Text(title);
   }
 
+  @override
   Widget build(BuildContext context) {
     return Consumer<UserInfoStorage>(
       builder: (context, store, child) => buildTitle(context, store),
@@ -69,6 +72,9 @@ class UserAppBarTitle extends StatelessWidget {
 }
 
 class UserBody extends StatelessWidget {
+  const UserBody({super.key});
+
+  @override
   Widget build(BuildContext context) {
     return Consumer2<UserInfoStorage, ArticlesStorage>(
         builder: (context, userStore, articlesStore, _) =>
@@ -80,13 +86,13 @@ class UserBody extends StatelessWidget {
     final userLoad = userStore.loadingState;
     final previewsLoad = articlesStore.firstLoading;
     if (userLoad == LoadingState.inProgress) {
-      return const Center(child: const CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     } else if (userLoad == LoadingState.isFinally) {
       if (userStore.info!.postCount == 0) {
         return Column(
           children: [
             AuthorInfoView(info: userStore.info!),
-            Expanded(child: const Center(child: const EmptyContent())),
+            const Expanded(child: Center(child: EmptyContent())),
           ],
         );
       }
@@ -96,8 +102,8 @@ class UserBody extends StatelessWidget {
         return Column(
           children: [
             AuthorInfoView(info: userStore.info!),
-            Expanded(
-                child: const Center(child: const CircularProgressIndicator())),
+            const Expanded(
+                child: Center(child: CircularProgressIndicator())),
           ],
         );
       }
@@ -105,7 +111,7 @@ class UserBody extends StatelessWidget {
     final err = userStore.lastError ?? articlesStore.lastError!;
     switch (err.errCode) {
       case ErrorType.ServerError:
-        return const Center(child: const LotOfEntropy());
+        return const Center(child: LotOfEntropy());
       default:
         return Center(
           child: LossInternetConnection(
@@ -128,14 +134,14 @@ class UserBody extends StatelessWidget {
       itemBuilder: (context, index) {
         final previews = articlesStore.previews;
         if ((index - authorInfoElementsCount) >= previews.length &&
-            articlesStore.loadItems) return Center(child: const CircularItem());
+            articlesStore.loadItems) return const Center(child: CircularItem());
         if (index < authorInfoElementsCount) {
           return AuthorInfoView(info: userStore.info!);
         }
         final preview = previews[index - authorInfoElementsCount];
         return SlidableArchive(
           child: ArticlePreview(
-            key: ValueKey("preview_" + preview.id),
+            key: ValueKey("preview_${preview.id}"),
             postPreview: preview,
             onPressed: (articleId) => openArticle(context, articleId),
           ),
@@ -158,15 +164,16 @@ class UserBody extends StatelessWidget {
 class AuthorInfoView extends StatelessWidget {
   final AuthorInfo info;
 
-  AuthorInfoView({required this.info});
+  const AuthorInfoView({super.key, required this.info});
 
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final localization = AppLocalizations.of(context)!;
     final locale = Localizations.localeOf(context);
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
         AuthorAvatarIcon(
@@ -178,7 +185,7 @@ class AuthorInfoView extends StatelessWidget {
               AvatarColorStore().getColor(info.alias, theme.brightness),
           borderWidth: 2,
         ),
-        Text('@' + info.alias, style: TextStyle(color: linkColorFrom(context))),
+        Text('@${info.alias}', style: TextStyle(color: linkColorFrom(context))),
         if (info.fullName != null && info.fullName!.isNotEmpty)
           Text("a.k.a. ${info.fullName}"),
         Text(info.speciality == null || info.speciality!.isEmpty
@@ -190,14 +197,14 @@ class AuthorInfoView extends StatelessWidget {
         //     Text(info.followCount)
         //   ],
         // ),
-        Text("Был онлайн " + dateToStr(info.lastActivityTime, locale)),
-        Text("Зарегистрировался " + dateToStr(info.registerTime, locale),
-            style: theme.textTheme.bodyText1),
+        Text("Был онлайн ${dateToStr(info.lastActivityTime, locale)}"),
+        Text("Зарегистрировался ${dateToStr(info.registerTime, locale)}",
+            style: theme.textTheme.bodyLarge),
         Container(
           alignment: Alignment.centerLeft,
-          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Text("${localization.articles}, ${info.postCount} штук",
-              style: Theme.of(context).textTheme.headline5),
+              style: Theme.of(context).textTheme.headlineSmall),
         )
       ],
     );

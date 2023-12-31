@@ -67,7 +67,7 @@ class ArticlesStorage with ChangeNotifier {
     final postOrError = await loadPage(page);
     return postOrError.fold<PostPreviews>((err) {
       // TODO: informing user
-      return PostPreviews(previews: [], maxCountPages: -1);
+      return const PostPreviews(previews: [], maxCountPages: -1);
     }, (posts) => posts);
   }
 

@@ -9,7 +9,7 @@ class LoadBuilder<Left, Right> extends StatelessWidget {
   final ValueBuilder<Left>? onLeftBuilder;
   final ValueBuilder<dynamic> onErrorBuilder;
 
-  LoadBuilder({
+  const LoadBuilder({super.key,
     required this.future,
     required this.onRightBuilder,
     this.onLeftBuilder,
@@ -23,10 +23,11 @@ class LoadBuilder<Left, Right> extends StatelessWidget {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           case ConnectionState.done:
-            if (snapshot.hasError)
+            if (snapshot.hasError) {
               return onErrorBuilder(context, snapshot.error);
+            }
             return snapshot.data!.fold<Widget>(
                     (err) => (onLeftBuilder ?? onErrorBuilder)(context, err),
                     (data) => onRightBuilder(context, data));

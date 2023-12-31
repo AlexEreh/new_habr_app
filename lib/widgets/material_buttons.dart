@@ -6,7 +6,7 @@ class MaterialButton extends StatelessWidget {
   final IconData? iconData;
   final String? text;
 
-  MaterialButton({this.onPressed, this.color, this.iconData, this.text});
+  const MaterialButton({super.key, this.onPressed, this.color, this.iconData, this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class CommentsButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Color? color;
 
-  CommentsButton({this.onPressed, this.color});
+  const CommentsButton({super.key, this.onPressed, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class SearchButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Color? color;
 
-  SearchButton({this.onPressed, this.color});
+  const SearchButton({super.key, this.onPressed, this.color});
 
   @override
   Widget build(BuildContext context) {

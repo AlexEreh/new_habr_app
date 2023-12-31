@@ -16,7 +16,7 @@ import 'components/comments_store.dart';
 class CommentsPage extends StatelessWidget {
   final String articleId;
 
-  CommentsPage({Key? key, required this.articleId}) : super(key: key);
+  const CommentsPage({super.key, required this.articleId});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class CommentsPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(AppLocalizations.of(context)!.comments),
-          actions: [],
+          actions: const [],
         ),
         body: Consumer<CommentsStorage>(
           builder: (context, store, _) => buildBody(context, store),
@@ -42,13 +42,14 @@ class CommentsPage extends StatelessWidget {
   Widget buildBody(BuildContext context, CommentsStorage commentsStorage) {
     switch (commentsStorage.loadingState) {
       case LoadingState.inProgress:
-        return const Center(child: const CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       case LoadingState.isFinally:
         final comments = commentsStorage.comments;
-        if (comments.length == 0)
-          return Center(
+        if (comments.isEmpty) {
+          return const Center(
             child: EmptyContent(),
           );
+        }
         return ListView.builder(
           itemBuilder: (BuildContext context, int index) => Container(
             padding: const EdgeInsets.only(left: 7, right: 7),
@@ -59,7 +60,7 @@ class CommentsPage extends StatelessWidget {
       case LoadingState.isCorrupted:
         switch (commentsStorage.lastError.errCode) {
           case ErrorType.ServerError:
-            return const Center(child: const LotOfEntropy());
+            return const Center(child: LotOfEntropy());
           default:
             return Center(
               child: LossInternetConnection(
@@ -77,7 +78,7 @@ class CommentsPage extends StatelessWidget {
 class LeveledCommentsView extends StatelessWidget {
   final Comment comment;
 
-  LeveledCommentsView(this.comment);
+  const LeveledCommentsView(this.comment, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +103,7 @@ class LeveledCommentsView extends StatelessWidget {
 class CommentView extends StatelessWidget {
   final Comment comment;
 
-  CommentView(this.comment);
+  const CommentView(this.comment, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -112,11 +113,12 @@ class CommentView extends StatelessWidget {
     final appSettings = Provider.of<AppSettings>(context, listen: false);
     final textAlign = appSettings.commentTextAlign;
     return Padding(
-        padding: EdgeInsets.only(top: 5, bottom: 5),
+        padding: const EdgeInsets.only(top: 5, bottom: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Wrap(
+              alignment: WrapAlignment.spaceBetween,
               children: [
                 InkWell(
                   child: SmallAuthorPreview(comment.author!),
@@ -125,8 +127,6 @@ class CommentView extends StatelessWidget {
                 Text(dateToStr(
                     comment.timePublished!, Localizations.localeOf(context))),
               ],
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              alignment: WrapAlignment.spaceBetween,
             ),
             const SizedBox(
               height: 10,

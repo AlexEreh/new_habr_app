@@ -10,7 +10,7 @@ class CenterAdaptiveConstrait extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 880),
+        constraints: const BoxConstraints(maxWidth: 880),
         child: child,
       ),
     );

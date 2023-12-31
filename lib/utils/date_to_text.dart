@@ -7,8 +7,9 @@ String dateToStr(DateTime date, Locale locale) {
   if (locale.languageCode != 'ru') {
     String format = '';
     format += 'MMMM dd';
-    if (now.year != date.year)
+    if (now.year != date.year) {
       format += ' yyyy';
+    }
     final dayDate = DateFormat(format).format(date);
     final time = DateFormat.Hm().format(date);
     return "$dayDate at $time";
@@ -16,7 +17,7 @@ String dateToStr(DateTime date, Locale locale) {
 
   String str;
   final currentDay = DateTime(now.year, now.month, now.day);
-  final yesterday = currentDay.add(Duration(days: -1));
+  final yesterday = currentDay.add(const Duration(days: -1));
 
   if (date.isAfter(currentDay)) {
     // сегодня

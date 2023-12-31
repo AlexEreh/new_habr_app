@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class SearchResultListPage extends StatelessWidget {
   final SearchLoader loader;
-  SearchResultListPage({Key? key, required this.loader}) : super(key: key);
+  const SearchResultListPage({super.key, required this.loader});
 
   @override
   Widget build(BuildContext context) {

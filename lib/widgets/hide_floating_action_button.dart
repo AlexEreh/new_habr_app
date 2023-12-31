@@ -7,14 +7,14 @@ class HideFloatingActionButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Duration duration;
 
-  HideFloatingActionButton({Key? key,
+  const HideFloatingActionButton({super.key,
     this.visible = true,
     this.child,
     this.onPressed,
     this.tooltip,
     required
     this.duration,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

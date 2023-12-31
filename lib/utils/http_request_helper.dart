@@ -10,7 +10,7 @@ Future<Either<AppError, http.Response>> safe(Future<http.Response> request) asyn
     return Right(await request);
   } catch (e) {
     logError(e);
-    return Left(
+    return const Left(
         AppError(
             errCode: ErrorType.BadRequest,
             message: "Request executing with errors")
@@ -19,15 +19,17 @@ Future<Either<AppError, http.Response>> safe(Future<http.Response> request) asyn
 }
 
 Either<AppError, http.Response> checkHttpStatus(http.Response response) {
-  if (response.statusCode == 200)
+  if (response.statusCode == 200) {
     return Right(response);
-  if (response.statusCode >= 500)
+  }
+  if (response.statusCode >= 500) {
     return Left(
       AppError(
         errCode: ErrorType.ServerError,
         message: "Server error with http status ${response.statusCode}"
       )
     );
+  }
   return Left(
       AppError(
         errCode: ErrorType.BadResponse,
@@ -41,7 +43,7 @@ dynamic parseJson(http.Response response) {
 }
 
 dynamic _parseJson(String data) {
-  final json = JsonCodec();
+  const json = JsonCodec();
   return json.decode(data);
 }
 

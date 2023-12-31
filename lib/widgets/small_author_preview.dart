@@ -9,13 +9,14 @@ class SmallAuthorPreview extends StatelessWidget {
   final Author author;
   final TextStyle? textStyle;
 
-  SmallAuthorPreview(this.author, {this.textStyle});
+  const SmallAuthorPreview(this.author, {super.key, this.textStyle});
 
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         AuthorAvatarIcon(
           key: ValueKey('avatar_${author.avatar.hashCode}'),
@@ -23,12 +24,11 @@ class SmallAuthorPreview extends StatelessWidget {
           defaultColor:
               AvatarColorStore().getColor(author.alias, themeData.brightness),
         ),
-        SizedBox(
+        const SizedBox(
           width: 5,
         ),
         Text(author.alias, style: textStyle),
       ],
-      mainAxisSize: MainAxisSize.min,
     );
   }
 }

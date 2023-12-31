@@ -11,7 +11,7 @@ import '../stores/loading_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CachedArticlesList extends StatelessWidget {
-  CachedArticlesList({Key? key}) : super(key: key);
+  const CachedArticlesList({super.key});
 
   Widget? bodyWidget(BuildContext context, ArticlesStorage store) {
     final habrStorage = Provider.of<HabrStorage>(context, listen: false);
@@ -19,7 +19,7 @@ class CachedArticlesList extends StatelessWidget {
     Widget? widget;
     switch (store.firstLoading!) {
       case LoadingState.isFinally:
-        widget = store.previews.length > 0
+        widget = store.previews.isNotEmpty
             ? IncrementallyLoadingListView(
                 itemBuilder: (itemContext, index) {
                   if (index >= store.previews.length && store.loadItems)
@@ -27,9 +27,9 @@ class CachedArticlesList extends StatelessWidget {
                   final preview = store.previews[index];
                   return DefaultConstraints(
                     child: SlidableDelete(
-                      key: Key("preview_delete_" + preview.id),
+                      key: Key("preview_delete_${preview.id}"),
                       child: ArticlePreview(
-                        key: Key("preview_" + preview.id),
+                        key: Key("preview_${preview.id}"),
                         postPreview: preview,
                         onPressed: (articleId) =>
                             openArticle(context, articleId),
@@ -54,13 +54,13 @@ class CachedArticlesList extends StatelessWidget {
                 loadMore: store.loadNextPage,
                 hasMore: store.hasNextPages,
               )
-            : Center(child: EmptyContent());
+            : const Center(child: EmptyContent());
         break;
       case LoadingState.inProgress:
-        widget = Center(child: CircularProgressIndicator());
+        widget = const Center(child: CircularProgressIndicator());
         break;
       case LoadingState.isCorrupted:
-        widget = Center(child: EmptyContent());
+        widget = const Center(child: EmptyContent());
         break;
     }
     return widget;

@@ -4,7 +4,7 @@ class WrappedContainer extends StatelessWidget {
   final List<Widget> children;
   final double distance;
 
-  WrappedContainer({required this.children, this.distance = 20});
+  const WrappedContainer({super.key, required this.children, this.distance = 20});
 
   @override
   Widget build(BuildContext context) {

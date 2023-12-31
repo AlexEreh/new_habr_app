@@ -18,8 +18,8 @@ class ScrollData extends ScrollBehavior {
         return RawScrollbar(
           thickness: thinkness,
           thumbVisibility: isAlwaysShow,
-          child: child,
           controller: details.controller,
+          child: child,
         );
       default:
         return child;
