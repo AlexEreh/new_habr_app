@@ -21,6 +21,9 @@ jobs:
     - uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
+        cache: true
+        cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
+        cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:'
     - name: fix
       run: flutter clean
     - name: Install dependencies
