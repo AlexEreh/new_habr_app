@@ -258,11 +258,11 @@ Node prepareHtmlBlocElement(dom.Element element) {
       );
     case 'figure':
       final img = element.getElementsByTagName('img')[0];
-      final caption = element.getElementsByTagName('figcaption')[0];
+      final caption = element.getElementsByTagName('figcaption');
       final url = img.attributes['data-src'] ?? img.attributes['src'];
       final imgBlock = Image(url!);
-      if (caption.text.isNotEmpty) {
-        imgBlock.caption = caption.text;
+      if (caption.length > 0 && caption[0].text.isNotEmpty) {
+        imgBlock.caption = caption[0].text;
       }
       return imgBlock;
     case 'pre':

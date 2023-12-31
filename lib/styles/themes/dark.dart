@@ -7,7 +7,7 @@ ThemeData buildDarkTheme({
 }) {
   return ThemeData(
     textTheme: buildTextTheme(Colors.white70, mainFontSize, lineSpacing),
-    accentColor: Colors.grey,
+    hintColor: Colors.grey,
     appBarTheme: AppBarTheme(
       color: Colors.blueGrey[600],
     ),

@@ -63,8 +63,8 @@ Post parsePostFromJson(Map<String, dynamic> data) {
 PostPreviews parsePostPreviewsFromJson(Map<String, dynamic> data) {
   return PostPreviews(
     maxCountPages: data['pagesCount'],
-    previews: data['articleIds'].map<PostPreview>((id) {
-      final article = data['articleRefs'][id];
+    previews: data['publicationIds'].map<PostPreview>((id) {
+      final article = data['publicationRefs'][id];
       return PostPreview(
           id: id,
           corporative: article['isCorporative'],

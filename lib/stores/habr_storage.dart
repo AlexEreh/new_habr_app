@@ -72,7 +72,7 @@ class HabrStorage {
   }
 
   Future<Either<AppError, Comments>> comments(String articleId) async {
-    return api.comments(articleId).mapRightAsync(_checkCachedCommentsAuthors);
+    return api.comments(articleId).mapRight(_checkCachedCommentsAuthors);
   }
 
   Future<Comments> _checkCachedCommentsAuthors(Comments comments) async {

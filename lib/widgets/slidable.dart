@@ -10,16 +10,18 @@ class SlidableArchive extends StatelessWidget {
   Widget build(BuildContext context) {
     return Slidable(
         child: child!,
-        actionPane: SlidableDrawerActionPane(),
-        actionExtentRatio: 0.25,
-        secondaryActions: <Widget>[
-          IconSlideAction(
-              caption: 'Archive',
-              color: Theme.of(context).scaffoldBackgroundColor,
-              icon: Icons.archive,
-              onTap: onArchive
-          ),
-        ]
+        endActionPane: ActionPane(
+          motion: DrawerMotion(),
+          extentRatio: 0.25,
+          children: [
+            SlidableAction(
+                label: 'Archive',
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                icon: Icons.archive,
+                onPressed: (context) => onArchive
+            ),
+          ],
+        ),
     );
   }
 }
@@ -34,26 +36,23 @@ class SlidableDelete extends StatelessWidget {
   Widget build(BuildContext context) {
     return Slidable(
       key: key,
-      dismissal: SlidableDismissal(
-        child: SlidableDrawerDismissal(),
-        onDismissed: (actionType) {
-          onDelete!();
-        },
-        dismissThresholds: <SlideActionType, double>{
-          SlideActionType.secondary: 0.3
-        },
-      ),
       child: child!,
-      actionPane: SlidableDrawerActionPane(),
-      actionExtentRatio: 0,
-      secondaryActions: <Widget>[
-        IconSlideAction(
-            caption: 'Delete',
-            color: Theme.of(context).scaffoldBackgroundColor,
-            icon: Icons.delete,
+      endActionPane: ActionPane(
+        extentRatio: 0,
+        motion: DrawerMotion(),
+        dismissible: DismissiblePane(
+          dismissThreshold: 0.3,
+            onDismissed: () => onDelete!()
         ),
-      ]
-
+        children: [
+          SlidableAction(
+            label: 'Delete',
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            icon: Icons.delete,
+            onPressed: (BuildContext context) {  },
+          ),
+        ],
+      ),
     );
   }
 }
@@ -68,23 +67,25 @@ class SlidableArchiveDelete extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).scaffoldBackgroundColor;
     return Slidable(
-        child: child!,
-        actionPane: SlidableDrawerActionPane(),
-        actionExtentRatio: 0.25,
-        secondaryActions: <Widget>[
-          IconSlideAction(
-              caption: 'Archive',
-              color: color,
-              icon: Icons.archive,
-              onTap: onArchive
-          ),
-          IconSlideAction(
-            caption: 'Delete',
-            color: color,
-            icon: Icons.delete,
-            onTap: onDelete,
-          ),
-        ]
+      child: child!,
+      endActionPane: ActionPane(
+          extentRatio: 0.25,
+          motion: DrawerMotion(),
+          children: [
+            SlidableAction(
+                label: 'Archive',
+                backgroundColor: color,
+                icon: Icons.archive,
+                onPressed: (context) => onArchive
+            ),
+            SlidableAction(
+              label: 'Delete',
+              backgroundColor: color,
+              icon: Icons.delete,
+              onPressed: (context) => onDelete,
+            ),
+          ]
+      ),
     );
   }
 }

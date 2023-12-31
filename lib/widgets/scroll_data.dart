@@ -17,7 +17,7 @@ class ScrollData extends ScrollBehavior {
       case TargetPlatform.windows:
         return RawScrollbar(
           thickness: thinkness,
-          isAlwaysShown: isAlwaysShow,
+          thumbVisibility: isAlwaysShow,
           child: child,
           controller: details.controller,
         );

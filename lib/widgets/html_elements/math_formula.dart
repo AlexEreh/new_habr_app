@@ -8,10 +8,13 @@ class MathFormula extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Math.tex(
-      formula,
-      mathStyle: MathStyle.text,
-      textStyle: Theme.of(context).textTheme.bodyText2,
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Math.tex(
+        formula,
+        mathStyle: MathStyle.text,
+        textStyle: Theme.of(context).textTheme.bodyMedium,
+      ),
     );
   }
 }
