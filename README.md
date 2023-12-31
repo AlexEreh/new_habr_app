@@ -1,44 +1,34 @@
-# habr app
+# Приложение для "Habr"
 
-Habr application.
+Приложение форкнуто [отсюда](https://github.com/avdosev/habr_app), так как:
+* Приложение не обновлялось ~2 года, отчего не работала загрузка статей.
+* Данное приложение достаточно проработано, чтобы на нём экспериментировать.
+* Есть желание сделать строгий дизайн (по крайней мере в тёмной теме).
 
-Main features:
-* Cache articles
-* Filter articles
-* Visual customizations
-* Desktop/Web/Tablet support
+Основные преимущества:
 
-# Visual customization
+* Кэширование публикаций
+* Фильтрация публикаций
+* Настройка внешнего вида
+* Поддержка Desktop/Web/Tablet
 
-* light and dark themes of the app \
-  select of a specific mode:
-  * constant (dark or light)
-  * system theme
-  * from time to time
-* font size
-* text alignment
-* line spacing
-* code styles \
-  select of a specific mode:
-  * dark mode coloring
-  * light mode coloring
-  * app used theme
+# Настройка внешнего вида
 
-## Screenshots
+* Светлая и тёмная тема приложения \
+  Доступен выбор режима:
+    * Постоянный (светлый или тёмный)
+    * Системная тема
+    * От времени до времени
+* Размер шрифта
+* Выравнивание текста
+* Межстрочный интервал
+* Стили кода \
+  Доступен выбор:
+    * Тёмной цветовой схемы
+    * Светлой цветовой схемы
+    * Цветовой схемы приложения
 
-<img src="./repo_images/gif_1.gif" height="400"></img>
-
-<img src="./repo_images/img_2.jpg" height="400"></img>
-
-<img src="./repo_images/img_3.jpg" height="400"></img>
-<img src="./repo_images/img_1.jpg" height="400"></img>
-
-<img src="./repo_images/img_4.jpg" height="400"></img>
-<img src="./repo_images/img_5.jpg" height="400"></img>
-
-<img src="./repo_images/img_6.jpg" height="400"></img>
-
-## Build
+## Сборка (под Android)
 
 ```
 flutter pub get
