@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'scroll_data.dart';
 
@@ -28,8 +27,6 @@ class IncrementallyLoadingListView extends StatefulWidget {
   /// This is relative to the bottom of the list and has a default value of 0 so that it loads when the last item within the list view scrolls into view.
   /// As an example, setting this to 1 would attempt to load more items when the second last item within the list view scrolls into view
   final int loadMoreOffsetFromBottom;
-  @override
-  final Key? key;
   final Axis scrollDirection;
   final bool reverse;
   final ScrollController? controller;
@@ -52,11 +49,10 @@ class IncrementallyLoadingListView extends StatefulWidget {
   /// A callback that is triggered when items have finished being loaded
   final OnLoadMoreFinished? onLoadMoreFinished;
 
-  IncrementallyLoadingListView(
-      {required this.hasMore,
+  const IncrementallyLoadingListView(
+      {super.key, required this.hasMore,
       required this.loadMore,
       this.loadMoreOffsetFromBottom = 0,
-      this.key,
       this.useScrollbar = true,
       this.scrollDirection = Axis.vertical,
       this.reverse = false,
@@ -76,7 +72,7 @@ class IncrementallyLoadingListView extends StatefulWidget {
       this.onLoadMoreFinished});
 
   const IncrementallyLoadingListView.separated(
-      {required this.hasMore,
+      {super.key, required this.hasMore,
       required this.loadMore,
       this.loadMoreOffsetFromBottom = 0,
       this.useScrollbar = true,
@@ -95,7 +91,7 @@ class IncrementallyLoadingListView extends StatefulWidget {
       this.addRepaintBoundaries = true,
       this.cacheExtent,
       this.onLoadMore,
-      this.onLoadMoreFinished, this.key});
+      this.onLoadMoreFinished});
 
   @override
   IncrementallyLoadingListViewState createState() {
@@ -192,7 +188,7 @@ class IncrementallyLoadingListViewState
               case TargetPlatform.windows:
                 return ScrollConfiguration(
                   behavior: const ScrollData(
-                    thinkness: 4,
+                    thickness: 4,
                     isAlwaysShow: true,
                   ),
                   child: listview,

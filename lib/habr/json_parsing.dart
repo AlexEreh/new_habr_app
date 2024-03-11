@@ -3,7 +3,7 @@ import 'package:habr_app/models/models.dart';
 import 'package:html/parser.dart' show parseFragment;
 
 AuthorAvatarInfo prepareAvatarUrl(String? url) {
-  if (url == null) return AuthorAvatarInfo(url: null);
+  if (url == null) return const AuthorAvatarInfo(url: null);
   if (url.startsWith("//")) url = url.replaceFirst("//", "https://");
   return AuthorAvatarInfo(url: url);
 }
@@ -67,7 +67,7 @@ PostPreviews parsePostPreviewsFromJson(Map<String, dynamic> data) {
       final article = data['publicationRefs'][id];
       return PostPreview(
           id: id,
-          corporative: article['isCorporative'],
+          isCorporative: article['isCorporative'],
           title: _prepareHtmlString(article['titleHtml']),
           hubs: article['hubs']
               .map<String>((flow) => flow['title'] as String)
@@ -91,7 +91,7 @@ AuthorInfo parseAuthorInfoFromJson(Map<String, dynamic> data) {
       avatar: prepareAvatarUrl(data['avatarUrl']),
       postCount: data['counterStats']['postCount'],
       followCount: data['followStats']['followCount'],
-      folowersCount: data['followStats']['followersCount'],
+      followersCount: data['followStats']['followersCount'],
       lastActivityTime: DateTime.parse(data['lastActivityDateTime']),
       registerTime: DateTime.parse(data['registerDateTime']),
       rating: data['rating'].round(),

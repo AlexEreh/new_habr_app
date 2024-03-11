@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import 'element_builders.dart';
 import 'package:html/dom.dart' as dom;
 
@@ -74,13 +76,6 @@ void optimizeBlock(Node? block) {
     } else {
       optimizeBlock(child);
     }
-  } else if (block is TextParagraph) {
-    block.text = block.text.trim();
-  } else if (block is Paragraph && block.children.isNotEmpty) {
-    final childSpan = block.children[0];
-    if (childSpan is TextSpan) {
-      childSpan.text = childSpan.text.trimLeft();
-    }
   }
 }
 
@@ -106,7 +101,7 @@ List<Span> prepareHtmlInlineElement(dom.Element element) {
           walk(child, modes);
           modes.removeLast();
         } else if (child.localName == 'a') {
-          if (child.text.isEmpty && child.children.length > 0) {
+          if (child.text.isEmpty && child.children.isNotEmpty) {
             walk(child, modes);
           } else {
             children.add(LinkSpan(child.text, child.attributes['href'] ?? ''));
@@ -148,7 +143,9 @@ List<Node> prepareChildrenHtmlBlocElement(dom.Element element) {
     if (node.nodeType == dom.Node.TEXT_NODE) {
       final text = prepareTextNode(node.text!);
       if (text.isNotEmpty && text.trim().isNotEmpty) {
-        print('text node');
+        if (kDebugMode) {
+          print('text node');
+        }
         final pch = paragraph.children;
         // may be this branch is not popular or not active
         if (pch.isNotEmpty) {
@@ -165,7 +162,9 @@ List<Node> prepareChildrenHtmlBlocElement(dom.Element element) {
     } else if (node.nodeType == dom.Node.ELEMENT_NODE) {
       // ignore: unnecessary_cast
       final child = node as dom.Element;
-      print(child.localName);
+      if (kDebugMode) {
+        print(child.localName);
+      }
       if (blockElements.contains(child.localName)) {
         makeNewParagraphAndInsertOlder();
         final block = prepareHtmlBlocElement(child);
@@ -187,7 +186,9 @@ List<Node> prepareChildrenHtmlBlocElement(dom.Element element) {
       } else if (child.localName == 'br') {
         makeNewParagraphAndInsertOlder();
       } else {
-        print('Not found case for ${child.localName}');
+        if (kDebugMode) {
+          print('Not found case for ${child.localName}');
+        }
       }
     }
   }
@@ -260,10 +261,11 @@ Node prepareHtmlBlocElement(dom.Element element) {
       final img = element.getElementsByTagName('img')[0];
       final caption = element.getElementsByTagName('figcaption');
       final url = img.attributes['data-src'] ?? img.attributes['src'];
-      final imgBlock = Image(url!);
-      if (caption.length > 0 && caption[0].text.isNotEmpty) {
-        imgBlock.caption = caption[0].text;
+      String? resultCaption;
+      if (caption.isNotEmpty && caption[0].text.isNotEmpty) {
+        resultCaption = caption[0].text;
       }
+      final imgBlock = Image(url!, caption: resultCaption);
       return imgBlock;
     case 'pre':
       if (element.children.isEmpty) return Scrollable(Code(element.text, ""));
@@ -280,7 +282,9 @@ Node prepareHtmlBlocElement(dom.Element element) {
       }
       return Scrollable(Table(rows));
     default:
-      print('Not found case for ${element.localName}');
+      if (kDebugMode) {
+        print('Not found case for ${element.localName}');
+      }
       throw UnsupportedError('${element.localName} not supported');
   }
 }

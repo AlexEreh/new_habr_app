@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:habr_app/stores/habr_storage.dart';
-import 'package:habr_app/models/models.dart' as Models;
+import 'package:habr_app/models/models.dart' as models;
 import 'package:habr_app/models/models.dart';
 import 'package:habr_app/stores/app_settings.dart';
 import 'package:habr_app/stores/bookmarks_store.dart';
@@ -79,7 +79,7 @@ class _ArticlePageState extends State<ArticlePage> {
         );
       case LoadingState.isCorrupted:
         switch (postStorage.lastError.errCode) {
-          case ErrorType.ServerError:
+          case ErrorType.serverError:
             return const Center(child: LotOfEntropy());
           default:
             return Center(
@@ -125,13 +125,13 @@ class _ArticlePageState extends State<ArticlePage> {
                   final store =
                       Provider.of<PostStorage>(context, listen: false);
                   switch (val) {
-                    case MoreButtons.Cache:
+                    case MoreButtons.cache:
                       habrStorage.addArticleInCache(widget.articleId);
                       break;
-                    case MoreButtons.Bookmark:
+                    case MoreButtons.bookmark:
                       addBookMark(store);
                       break;
-                    case MoreButtons.BackToBookmark:
+                    case MoreButtons.backToBookmark:
                       returnToBookmark(store);
                       break;
                   }
@@ -150,11 +150,11 @@ class _ArticlePageState extends State<ArticlePage> {
           valueListenable: showFloatingActionButton,
           builder: (BuildContext context, bool value, Widget? child) =>
               HideFloatingActionButton(
-            tooltip: AppLocalizations.of(context)!.comments,
-            visible: value,
-            onPressed: () => openCommentsPage(context, articleId),
-            duration: const Duration(milliseconds: 300),
-            child: const Icon(Icons.chat_bubble_outline),
+                tooltip: AppLocalizations.of(context)!.comments,
+                visible: value,
+                onPressed: () => openCommentsPage(context, articleId),
+                duration: const Duration(milliseconds: 300),
+                child: const Icon(Icons.chat_bubble_outline),
           ),
         ),
       ),
@@ -170,7 +170,7 @@ class _ArticlePageState extends State<ArticlePage> {
         title: post.title,
         flows: [],
         publishDate: post.publishDate,
-        statistics: const Models.Statistics.zero(),
+        statistics: const models.Statistics.zero(),
         author: post.author,
       );
       BookmarksStore().addBookmark(articleId, position, preview);
@@ -205,11 +205,11 @@ class _ArticlePageState extends State<ArticlePage> {
 }
 
 class MoreButtons {
-  static const String Cache = "Сохранить";
-  static const String Bookmark = "Запомнить позицию";
-  static const String BackToBookmark = "Вернуться в позицию";
+  static const String cache = "Сохранить";
+  static const String bookmark = "Запомнить позицию";
+  static const String backToBookmark = "Вернуться в позицию";
 
-  static const List<String> values = [Cache, Bookmark, BackToBookmark];
+  static const List<String> values = [cache, bookmark, backToBookmark];
 }
 
 class ArticleInfo extends StatelessWidget {
@@ -239,8 +239,8 @@ class ArticleInfo extends StatelessWidget {
         ),
         Text(
           article!.title,
-          style: const TextStyle(fontSize: 24),
-          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.headlineMedium,
+          textAlign: TextAlign.start,
         ),
       ],
     );
@@ -261,7 +261,7 @@ class ArticleView extends StatelessWidget {
     final listview = SingleChildScrollView(
       padding: const EdgeInsets.only(top: 10, bottom: 20),
       controller: controller,
-      child: CenterAdaptiveConstrait(
+      child: CenterAdaptiveConstraint(
         child: Column(
           children: [
             Padding(
@@ -304,7 +304,7 @@ class ArticleView extends StatelessWidget {
     );
     return ScrollConfiguration(
       behavior: ScrollData(
-        thinkness: 4,
+        thickness: 4,
         isAlwaysShow: isDesktop(context),
       ),
       child: listview,

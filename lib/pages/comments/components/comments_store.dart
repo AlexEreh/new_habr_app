@@ -39,6 +39,7 @@ class CommentsStorage with ChangeNotifier {
     ).catchError((err) {
       logError(err);
       loadingState = LoadingState.isCorrupted;
+      return Either.cond(false, null, null);
     }).then((_) => notifyListeners());
   }
 }

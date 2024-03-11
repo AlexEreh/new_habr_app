@@ -4,24 +4,24 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 class SlidableArchive extends StatelessWidget {
   final Widget? child;
   final VoidCallback? onArchive;
+
   const SlidableArchive({super.key, this.child, this.onArchive});
 
   @override
   Widget build(BuildContext context) {
     return Slidable(
-        endActionPane: ActionPane(
-          motion: const DrawerMotion(),
-          extentRatio: 0.25,
-          children: [
-            SlidableAction(
-                label: 'Archive',
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                icon: Icons.archive,
-                onPressed: (context) => onArchive
-            ),
-          ],
-        ),
-        child: child!,
+      endActionPane: ActionPane(
+        motion: const DrawerMotion(),
+        extentRatio: 0.25,
+        children: [
+          SlidableAction(
+              label: 'Archive',
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              icon: Icons.archive,
+              onPressed: (context) => onArchive),
+        ],
+      ),
+      child: child!,
     );
   }
 }
@@ -29,6 +29,7 @@ class SlidableArchive extends StatelessWidget {
 class SlidableDelete extends StatelessWidget {
   final Widget? child;
   final VoidCallback? onDelete;
+
   const SlidableDelete({super.key, this.child, this.onDelete});
 
   @override
@@ -39,15 +40,13 @@ class SlidableDelete extends StatelessWidget {
         extentRatio: 0,
         motion: const DrawerMotion(),
         dismissible: DismissiblePane(
-          dismissThreshold: 0.3,
-            onDismissed: () => onDelete!()
-        ),
+            dismissThreshold: 0.3, onDismissed: () => onDelete!()),
         children: [
           SlidableAction(
             label: 'Delete',
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             icon: Icons.delete,
-            onPressed: (BuildContext context) {  },
+            onPressed: (BuildContext context) {},
           ),
         ],
       ),
@@ -60,7 +59,9 @@ class SlidableArchiveDelete extends StatelessWidget {
   final Widget? child;
   final VoidCallback? onArchive;
   final VoidCallback? onDelete;
-  const SlidableArchiveDelete({super.key, this.child, this.onArchive, this.onDelete});
+
+  const SlidableArchiveDelete(
+      {super.key, this.child, this.onArchive, this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -74,16 +75,14 @@ class SlidableArchiveDelete extends StatelessWidget {
                 label: 'Archive',
                 backgroundColor: color,
                 icon: Icons.archive,
-                onPressed: (context) => onArchive
-            ),
+                onPressed: (context) => onArchive),
             SlidableAction(
               label: 'Delete',
               backgroundColor: color,
               icon: Icons.delete,
               onPressed: (context) => onDelete,
             ),
-          ]
-      ),
+          ]),
       child: child!,
     );
   }

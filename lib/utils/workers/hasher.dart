@@ -1,8 +1,7 @@
-import 'package:crypto/crypto.dart';
 import 'dart:async';
 import 'dart:convert';
 
-
+import 'package:crypto/crypto.dart';
 import 'package:habr_app/utils/worker/worker.dart';
 
 String _computeMD5Hash(String str) {

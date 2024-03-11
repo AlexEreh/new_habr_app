@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:habr_app/stores/habr_storage.dart';
-import 'package:habr_app/routing/routing.dart';
-import 'package:provider/provider.dart';
-import 'package:habr_app/stores/articles_store.dart';
-import 'package:habr_app/utils/message_notifier.dart';
 import 'package:habr_app/app_error.dart';
+import 'package:habr_app/routing/routing.dart';
+import 'package:habr_app/stores/articles_store.dart';
+import 'package:habr_app/stores/habr_storage.dart';
 import 'package:habr_app/stores/loading_state.dart';
+import 'package:habr_app/utils/message_notifier.dart';
+import 'package:provider/provider.dart';
 
 import 'adaptive_ui.dart';
-import 'incrementally_loading_listview.dart';
+import 'article_preview.dart';
+import 'circular_item.dart';
 import 'hr.dart';
+import 'incrementally_loading_listview.dart';
 import 'informing/informing.dart';
 import 'slidable.dart';
-import 'circular_item.dart';
-import 'article_preview.dart';
 
 class ArticlesListBody extends StatelessWidget {
   const ArticlesListBody({super.key});
@@ -38,16 +38,17 @@ class ArticlesListBody extends StatelessWidget {
             final habrStorage =
                 Provider.of<HabrStorage>(context, listen: false);
             return DefaultConstraints(
-                child: SlidableArchive(
-              child: ArticlePreview(
-                key: ValueKey("preview_${preview.id}"),
-                postPreview: preview,
-                onPressed: (articleId) => openArticle(context, articleId),
+              child: SlidableArchive(
+                child: ArticlePreview(
+                  key: ValueKey("preview_${preview.id}"),
+                  postPreview: preview,
+                  onPressed: (articleId) => openArticle(context, articleId),
+                ),
+                onArchive: () => habrStorage.addArticleInCache(preview.id).then(
+                    (res) => notifySnackbarText(context,
+                        "${preview.title} ${res ? '' : 'не'} скачано")),
               ),
-              onArchive: () => habrStorage.addArticleInCache(preview.id).then(
-                  (res) => notifySnackbarText(
-                      context, "${preview.title} ${res ? '' : 'не'} скачано")),
-            ));
+            );
           },
           separatorBuilder: (context, index) =>
               const DefaultConstraints(child: Hr()),
@@ -61,12 +62,13 @@ class ArticlesListBody extends StatelessWidget {
         break;
       case LoadingState.isCorrupted:
         switch (store.lastError!.errCode) {
-          case ErrorType.ServerError:
+          case ErrorType.serverError:
             widget = const Center(child: LotOfEntropy());
             break;
           default:
             widget = Center(
-                child: LossInternetConnection(onPressReload: store.reload));
+              child: LossInternetConnection(onPressReload: store.reload),
+            );
         }
         break;
     }

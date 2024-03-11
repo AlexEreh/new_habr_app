@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:habr_app/stores/filters_store.dart';
-import 'package:habr_app/utils/filters/article_preview_filters.dart';
-import 'package:habr_app/utils/page_loaders/preview_loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:habr_app/routing/routing.dart';
 import 'package:habr_app/stores/articles_store.dart';
-import 'package:habr_app/widgets/widgets.dart';
+import 'package:habr_app/stores/filters_store.dart';
 import 'package:habr_app/stores/habr_storage.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:habr_app/utils/filters/article_preview_filters.dart';
+import 'package:habr_app/utils/page_loaders/preview_loader.dart';
+import 'package:habr_app/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class ArticlesList extends StatelessWidget {
   const ArticlesList({super.key});
@@ -17,9 +18,15 @@ class ArticlesList extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final drawerIsPartOfBody = width > 1000;
     return Scaffold(
-      drawer: drawerIsPartOfBody ? null : MainMenu(),
+      drawer: drawerIsPartOfBody ? null : const MainMenu(),
       appBar: AppBar(
-        title: const Text("Habr"),
+        title: Center(
+          child: Text(
+            "HABR",
+            style: GoogleFonts.montserrat(
+                fontSize: 28, fontWeight: FontWeight.w500),
+          ),
+        ),
         actions: [
           IconButton(
               tooltip: AppLocalizations.of(context)!.search,
@@ -36,7 +43,7 @@ class ArticlesList extends StatelessWidget {
         },
         child: Row(
           children: [
-            if (drawerIsPartOfBody) DesktopHomeMenu(),
+            if (drawerIsPartOfBody) const DesktopHomeMenu(),
             const Expanded(child: ArticlesListBody()),
           ],
         ),

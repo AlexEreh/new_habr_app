@@ -1,4 +1,4 @@
-package habrapp.habr_app
+package ru.alexereh.habrapp
 
 import io.flutter.embedding.android.FlutterActivity
 

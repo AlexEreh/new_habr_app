@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_highlight/theme_map.dart';
 import 'package:habr_app/utils/worker/worker.dart';
-import 'package:highlight/highlight.dart' show highlight, Node, Result;
+import 'package:highlight/highlight.dart' show highlight, Node;
 
 class HighlightCode extends StatelessWidget {
   final String text;
@@ -12,8 +12,8 @@ class HighlightCode extends StatelessWidget {
   final String themeNameDark;
   final String themeNameLight;
 
-  HighlightCode(
-    this.text, {
+  const HighlightCode(
+    this.text, {super.key,
     this.language,
     this.padding,
     this.codeStyle,
@@ -22,6 +22,7 @@ class HighlightCode extends StatelessWidget {
     this.themeNameLight = "github",
   });
 
+  @override
   Widget build(BuildContext context) {
     final mode = _getThemeMode(context);
 
@@ -123,7 +124,7 @@ class _HighlightViewState extends State<_HighlightView> {
     var currentSpans = spans;
     List<List<TextSpan>> stack = [];
 
-    _traverse(Node node) {
+    traverse(Node node) {
       if (node.value != null) {
         currentSpans.add(node.className == null
             ? TextSpan(text: node.value)
@@ -136,17 +137,17 @@ class _HighlightViewState extends State<_HighlightView> {
         stack.add(currentSpans);
         currentSpans = tmp;
 
-        node.children!.forEach((n) {
-          _traverse(n);
+        for (var n in node.children!) {
+          traverse(n);
           if (n == node.children!.last) {
             currentSpans = stack.isEmpty ? spans : stack.removeLast();
           }
-        });
+        }
       }
     }
 
     for (var node in nodes) {
-      _traverse(node);
+      traverse(node);
     }
 
     return spans;
@@ -178,12 +179,12 @@ class _HighlightViewState extends State<_HighlightView> {
 
   @override
   Widget build(BuildContext context) {
-    var _textStyle = TextStyle(
+    var textStyle = TextStyle(
       fontFamily: _defaultFontFamily,
       color: widget.theme![_rootKey]?.color ?? _defaultFontColor,
     );
     if (widget.textStyle != null) {
-      _textStyle = _textStyle.merge(widget.textStyle);
+      textStyle = textStyle.merge(widget.textStyle);
     }
 
     return Container(
@@ -201,13 +202,13 @@ class _HighlightViewState extends State<_HighlightView> {
             if (data != null) {
               return RichText(
                 text: TextSpan(
-                  style: _textStyle,
+                  style: textStyle,
                   children: _convert(data),
                 ),
               );
             }
           }
-          return Text(widget.source, style: _textStyle);
+          return Text(widget.source, style: textStyle);
         },
       ),
     );

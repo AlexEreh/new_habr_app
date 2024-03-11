@@ -7,13 +7,19 @@ class LotOfEntropy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset("assets/images/lot_of_entropy.webp", height: 300, width: 300,),
-          SizedBox(height: 30,),
-          Text(AppLocalizations.of(context)!.appError),
-        ]
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Image.asset(
+          "assets/images/lot_of_entropy.webp",
+          height: 300,
+          width: 300,
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        Text(AppLocalizations.of(context)!.appError),
+      ],
     );
   }
 }

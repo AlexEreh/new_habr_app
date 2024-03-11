@@ -10,17 +10,18 @@ class LossInternetConnection extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalizations.of(context)!;
     return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset("assets/images/ufo.png"),
-          const SizedBox(height: 30),
-          Text(localization.lossInternet),
-          const SizedBox(height: 10),
-          TextButton(
-            onPressed: onPressReload,
-            child: Text(localization.reload),
-          )
-        ]);
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Image.asset("assets/images/ufo.png"),
+        const SizedBox(height: 30),
+        Text(localization.lossInternet),
+        const SizedBox(height: 10),
+        TextButton(
+          onPressed: onPressReload,
+          child: Text(localization.reload),
+        )
+      ],
+    );
   }
 }

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class EmptyContent extends StatelessWidget {
   final double pictureHeight;
   final double pictureWidth;
 
-  const EmptyContent({super.key, this.pictureHeight = 150, this.pictureWidth = 100});
+  const EmptyContent(
+      {super.key, this.pictureHeight = 150, this.pictureWidth = 100});
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +16,16 @@ class EmptyContent extends StatelessWidget {
       children: [
         SvgPicture.asset(
           "assets/images/empty_comments.svg",
-          height: pictureHeight, width: pictureWidth,
+          height: pictureHeight,
+          width: pictureWidth,
         ),
-        const SizedBox(height: 40,),
-        Text(AppLocalizations.of(context)!.emptyContent),
+        const SizedBox(
+          height: 40,
+        ),
+        Text(
+          AppLocalizations.of(context)!.emptyContent,
+          textAlign: TextAlign.center,
+        ),
       ],
     );
   }

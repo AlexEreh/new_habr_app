@@ -5,7 +5,7 @@ import 'package:habr_app/utils/url_open.dart';
 class Link extends StatelessWidget {
   final Widget? child;
   final String? url;
-  const Link({this.child, required this.url});
+  const Link({super.key, this.child, required this.url});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class Link extends StatelessWidget {
   }
 }
 
-TextSpan InlineTextLink(
+TextSpan inlineTextLink(
     {required String title,
     required String? url,
     required BuildContext context}) {

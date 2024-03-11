@@ -9,14 +9,16 @@ class Statistics extends StatelessWidget {
   final TextStyle? textStyle;
   final ValueToStringTransformer valueToStringTransformer;
 
-  const Statistics.widget({super.key,
+  const Statistics.widget({
+    super.key,
     required this.value,
     required this.leading,
     this.textStyle,
     ValueToStringTransformer? valueTransformer,
   }) : valueToStringTransformer = valueTransformer ?? intToMetricPrefix;
 
-  Statistics.icon({super.key,
+  Statistics.icon({
+    super.key,
     required IconData iconData,
     required this.value,
     double size = 20,
@@ -27,16 +29,18 @@ class Statistics extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      leading,
-      const SizedBox(
-        width: 5,
-      ),
-      Text(
-        valueToStringTransformer(value),
-        style: textStyle,
-      ),
-    ]);
+    return Row(
+      children: [
+        leading,
+        const SizedBox(
+          width: 5,
+        ),
+        Text(
+          valueToStringTransformer(value),
+          style: textStyle,
+        ),
+      ],
+    );
   }
 }
 

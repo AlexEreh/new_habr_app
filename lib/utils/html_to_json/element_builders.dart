@@ -1,4 +1,5 @@
 import 'text_mode.dart';
+
 export 'text_mode.dart';
 
 abstract class Node {
@@ -26,12 +27,12 @@ class Paragraph implements Node {
   String get type => "paragraph";
 }
 
-abstract class Span {}
+interface class Span {}
 
 class BlockSpan implements Span {
-  Node child;
+  final Node child;
 
-  BlockSpan(this.child);
+  const BlockSpan(this.child);
 }
 
 class TextSpan implements Span {
@@ -45,46 +46,48 @@ class TextSpan implements Span {
 }
 
 class LinkSpan implements Span {
-  String text;
-  String link;
+  final String text;
+  final String link;
 
-  LinkSpan(this.text, this.link);
+  const LinkSpan(this.text, this.link);
 }
 
 class TextParagraph implements Node {
-  String text;
+  final String _text;
 
-  TextParagraph(this.text);
+  TextParagraph(final String text): _text = text.trim();
+
+  String get text => _text;
 
   @override
   String get type => "text_paragraph";
 }
 
 class HeadLine implements Node {
-  String text;
-  String mode;
+  final String text;
+  final String mode;
 
-  HeadLine(this.text, this.mode);
+  const HeadLine(this.text, this.mode);
 
   @override
   String get type => "headline";
 }
 
 class Image implements Node {
-  String src;
-  String? caption;
+  final String src;
+  final String? caption;
 
-  Image(this.src, {this.caption});
+  const Image(this.src, {this.caption});
 
   @override
   String get type => "image";
 }
 
 class Code implements Node {
-  String text;
-  String? language;
+  final String text;
+  final String? language;
 
-  Code(this.text, this.language);
+  const Code(this.text, this.language);
 
   @override
   String get type => "code";
@@ -166,7 +169,7 @@ class Table implements Node {
 class MathFormula implements Node {
   final String formula;
 
-  MathFormula(this.formula);
+  const MathFormula(this.formula);
 
   @override
   String get type => "formula";

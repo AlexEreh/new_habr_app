@@ -10,7 +10,7 @@ class PostPreview {
   final DateTime publishDate;
   final Author author;
   final Statistics statistics;
-  final bool corporative;
+  final bool isCorporative;
 
   const PostPreview({
     required this.id,
@@ -21,7 +21,7 @@ class PostPreview {
     required this.publishDate,
     required this.author,
     required this.statistics,
-    this.corporative = false,
+    this.isCorporative = false,
   });
 }
 

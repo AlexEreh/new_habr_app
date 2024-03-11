@@ -1,14 +1,14 @@
+import 'package:either_dart/either.dart';
 import 'package:flutter/foundation.dart';
+import 'package:habr_app/app_error.dart';
 import 'package:habr_app/habr/habr.dart';
 import 'package:habr_app/models/cached_post.dart';
 import 'package:habr_app/models/models.dart';
 import 'package:habr_app/stores/image_storage.dart';
-import 'package:itertools/itertools.dart';
 import 'package:habr_app/utils/images_finder.dart';
 import 'package:habr_app/utils/log.dart';
-import 'package:either_dart/either.dart';
-import 'package:habr_app/app_error.dart';
 import 'package:hive/hive.dart';
+import 'package:itertools/itertools.dart';
 
 enum PostsFlow { saved, dayTop, weekTop, yearTop, time, news }
 
@@ -41,7 +41,7 @@ class HabrStorage {
     return Either.condLazy(
       cachedPost != null && cachedAuthor != null,
       () => const AppError(
-          errCode: ErrorType.NotFound,
+          errCode: ErrorType.notFound,
           message: "Article not found in local storage"),
       () => Post(
         id: cachedPost!.id,
@@ -56,12 +56,12 @@ class HabrStorage {
   Future<bool> addArticleInCache(String id) {
     return article(id)
         .then((postOrError) =>
-            postOrError.mapAsync((post) => _cacheArticle(post)))
+            postOrError.mapAsync((post) => _moveArticleToCache(post)))
         .then((cachedPost) => cachedPost.isRight);
   }
 
   Future removeArticleFromCache(String id) {
-    return _uncacheArticle(id);
+    return _removeArticleFromCache(id);
   }
 
   Future removeAllArticlesFromCache() async {
@@ -86,16 +86,17 @@ class HabrStorage {
     final authorById = Map.fromEntries(
         cachedAuthors.map((value) => MapEntry(value!.id, value)));
     return Comments(
-        comments: comments.comments.map((key, comment) {
-          if (!comment.banned) {
-            final cachedAuthor = authorById[comment.author];
-            if (cachedAuthor != null) {
-              return MapEntry(key, comment.copyWith(author: cachedAuthor));
-            }
+      comments: comments.comments.map((key, comment) {
+        if (!comment.banned) {
+          final cachedAuthor = authorById[comment.author?.id ?? ''];
+          if (cachedAuthor != null) {
+            return MapEntry(key, comment.copyWith(author: cachedAuthor));
           }
-          return MapEntry(key, comment);
-        }),
-        threads: comments.threads);
+        }
+        return MapEntry(key, comment);
+      }),
+      threads: comments.threads,
+    );
   }
 
   Future<Either<AppError, PostPreviews>> cachedPosts({int page = 1}) async {
@@ -132,7 +133,7 @@ class HabrStorage {
     await authors.put(author.id, author);
   }
 
-  Future _uncacheArticle(String articleId) async {
+  Future _removeArticleFromCache(String articleId) async {
     final eitherPost = await cachedArticle(articleId);
     if (eitherPost.isLeft) return;
     final post = eitherPost.right;
@@ -142,7 +143,7 @@ class HabrStorage {
     await Future.wait(urls.map((url) => imgStore.deleteImage(url)));
   }
 
-  Future _cacheArticle(Post post) async {
+  Future _moveArticleToCache(Post post) async {
     if (await authors.get(post.author.id) == null) {
       await _cacheAuthor(post.author);
     }

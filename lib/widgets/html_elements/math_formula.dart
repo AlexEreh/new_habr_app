@@ -4,7 +4,7 @@ import 'package:flutter_math_fork/flutter_math.dart';
 class MathFormula extends StatelessWidget {
   final String formula;
 
-  const MathFormula(this.formula, {Key? key}) : super(key: key);
+  const MathFormula(this.formula, {super.key});
 
   @override
   Widget build(BuildContext context) {

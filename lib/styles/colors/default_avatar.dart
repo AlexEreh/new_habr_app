@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 class DefaultAvatarColors {
-
   static const lilac = Color.fromRGBO(0xa0, 0x8b, 0xb5, 1);
 
   static const pink = Color.fromRGBO(0xb5, 0x8b, 0xa9, 1);

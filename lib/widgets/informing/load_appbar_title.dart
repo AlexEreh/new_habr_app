@@ -18,8 +18,8 @@ class _LoadAppBarTitleState extends State<LoadAppBarTitle>
   @override
   void initState() {
     super.initState();
-    controller =
-        AnimationController(duration: const Duration(milliseconds: 800), vsync: this);
+    controller = AnimationController(
+        duration: const Duration(milliseconds: 800), vsync: this);
     animation = Tween<double>(begin: 30, end: 85).animate(controller)
       ..addListener(() {
         setState(() {
@@ -49,27 +49,29 @@ class _LoadAppBarTitleState extends State<LoadAppBarTitle>
     final color = Theme.of(context).primaryTextTheme.titleLarge!.color!;
     final loadingText = AppLocalizations.of(context)!.loading;
     return Text.rich(
-      TextSpan(children: [
-        TextSpan(text: loadingText),
-        TextSpan(
-          text: '.',
-          style: TextStyle(
-            color: color.withAlpha(255 - (alpha.toDouble() * 1.1).round()),
+      TextSpan(
+        children: [
+          TextSpan(text: loadingText),
+          TextSpan(
+            text: '.',
+            style: TextStyle(
+              color: color.withAlpha(255 - (alpha.toDouble() * 1.1).round()),
+            ),
           ),
-        ),
-        TextSpan(
-          text: '.',
-          style: TextStyle(
-            color: color.withAlpha(255 - (alpha * 2)),
+          TextSpan(
+            text: '.',
+            style: TextStyle(
+              color: color.withAlpha(255 - (alpha * 2)),
+            ),
           ),
-        ),
-        TextSpan(
-          text: '.',
-          style: TextStyle(
-            color: color.withAlpha(255 - (alpha * 3)),
+          TextSpan(
+            text: '.',
+            style: TextStyle(
+              color: color.withAlpha(255 - (alpha * 3)),
+            ),
           ),
-        ),
-      ]),
+        ],
+      ),
       overflow: TextOverflow.fade,
     );
   }

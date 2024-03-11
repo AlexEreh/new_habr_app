@@ -1,14 +1,13 @@
-import 'package:either_dart/either.dart';
+import 'dart:io';
 
+import 'package:either_dart/either.dart';
 import 'package:habr_app/app_error.dart';
 import 'package:habr_app/models/cached_image_info.dart';
+import 'package:habr_app/utils/log.dart';
 import 'package:habr_app/utils/workers/hasher.dart';
 import 'package:habr_app/utils/workers/image_loader.dart';
-import 'package:habr_app/utils/log.dart';
-
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ImageLocalStorage {
   final data = Hive.lazyBox<CachedImageInfo>('cached_images');
@@ -54,7 +53,7 @@ class ImageLocalStorage {
 
     if (!loaded) {
       return const Left(AppError(
-        errCode: ErrorType.NotCached,
+        errCode: ErrorType.notCached,
         message: 'img not loaded',
       ));
     }
@@ -67,7 +66,7 @@ class ImageLocalStorage {
       // повторный файл не нужен, поэтому его можно удалить
       File(filename).delete();
       return const Left(AppError(
-        errCode: ErrorType.NotCached,
+        errCode: ErrorType.notCached,
         message: "img url exist in cache",
       ));
     }
@@ -98,7 +97,7 @@ class ImageLocalStorage {
     return Either.condLazy(
         res != null,
         () => const AppError(
-            errCode: ErrorType.NotFound, message: "Image in cache not found"),
+            errCode: ErrorType.notFound, message: "Image in cache not found"),
         () => res!.path);
   }
 }

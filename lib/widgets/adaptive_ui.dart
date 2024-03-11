@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CenterAdaptiveConstrait extends StatelessWidget {
+class CenterAdaptiveConstraint extends StatelessWidget {
   final Widget child;
 
-  const CenterAdaptiveConstrait({required this.child});
+  const CenterAdaptiveConstraint({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +20,12 @@ class CenterAdaptiveConstrait extends StatelessWidget {
 class DefaultConstraints extends StatelessWidget {
   final Widget child;
 
-  const DefaultConstraints({required this.child});
+  const DefaultConstraints({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
+      child: SizedBox(
         width: 880,
         child: child,
       ),

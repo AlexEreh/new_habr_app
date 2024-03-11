@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:either_dart/either.dart';
+import 'package:flutter/material.dart';
 
 typedef ValueBuilder<Value> = Widget Function(BuildContext, Value);
 
@@ -9,7 +9,8 @@ class LoadBuilder<Left, Right> extends StatelessWidget {
   final ValueBuilder<Left>? onLeftBuilder;
   final ValueBuilder<dynamic> onErrorBuilder;
 
-  const LoadBuilder({super.key,
+  const LoadBuilder({
+    super.key,
     required this.future,
     required this.onRightBuilder,
     this.onLeftBuilder,
@@ -29,8 +30,8 @@ class LoadBuilder<Left, Right> extends StatelessWidget {
               return onErrorBuilder(context, snapshot.error);
             }
             return snapshot.data!.fold<Widget>(
-                    (err) => (onLeftBuilder ?? onErrorBuilder)(context, err),
-                    (data) => onRightBuilder(context, data));
+                (err) => (onLeftBuilder ?? onErrorBuilder)(context, err),
+                (data) => onRightBuilder(context, data));
           default:
             return const Text('Something went wrong');
         }

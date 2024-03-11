@@ -44,7 +44,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "habrapp.habr_app"
+        applicationId "ru.alexereh.habrapp"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
@@ -58,6 +58,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    namespace 'ru.alexereh.habrapp'
 }
 
 flutter {

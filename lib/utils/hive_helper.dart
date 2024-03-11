@@ -4,7 +4,6 @@ import 'package:habr_app/models/cached_image_info.dart';
 import 'package:habr_app/models/cached_post.dart';
 import 'package:habr_app/models/post_preview.dart';
 import 'package:habr_app/utils/filters/filter.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 Future<void> initializeHive() async {

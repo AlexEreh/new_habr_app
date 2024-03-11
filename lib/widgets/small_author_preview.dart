@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:habr_app/models/author.dart';
 import 'package:habr_app/stores/avatar_color_store.dart';
 

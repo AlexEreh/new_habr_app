@@ -21,15 +21,15 @@ class HideFloatingActionButton extends StatelessWidget {
     return AnimatedSwitcher(
         duration: duration,
         transitionBuilder: (Widget child, Animation<double> animation) {
-          return ScaleTransition(child: FadeTransition(child: child, opacity: animation), scale: animation);
+          return ScaleTransition(scale: animation, child: FadeTransition(opacity: animation, child: child));
         },
         child: Visibility(
             visible: visible,
             key: UniqueKey(),
             child: FloatingActionButton(
               tooltip: tooltip,
-              child: child,
               onPressed: onPressed,
+              child: child,
             )
         )
     );

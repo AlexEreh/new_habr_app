@@ -1,10 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:habr_app/routing/routing.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 launchUrl(BuildContext context, String url) async {
   // TODO: open habr url in app
-  if (url.startsWith(RegExp("https?://(m\.)?habr\.com"))) {
+  if (url.startsWith(RegExp("https?://(m.)?habr.com"))) {
     final postRegexp = RegExp(
         r"https?://(m\.)?habr\.com/((ru|en)/)?(post|company/\w+/blog)/(\d+)/?");
     final matchPost = postRegexp.firstMatch(url);
@@ -13,8 +13,10 @@ launchUrl(BuildContext context, String url) async {
       openArticle(context, postId!);
       return;
     } else {
-      print("no match");
+      if (kDebugMode) {
+        print("no match");
+      }
     }
   }
-  await launch(url);
+  await launchUrl(context, url);
 }

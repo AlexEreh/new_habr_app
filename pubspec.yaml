@@ -6,7 +6,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.7.2+4
 
 environment:
-  sdk: '>=3.2.0 <4.0.0'
+  sdk: '>=3.3.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -32,6 +32,10 @@ dependencies:
   provider: ^6.0.0
   itertools: ">=0.1.0"
   cached_network_image: ^3.2.0
+  google_fonts: ^6.2.1
+  highlight: ^0.7.0
+  intl:
+  tuple_dart:
 
 dev_dependencies:
   flutter_test:

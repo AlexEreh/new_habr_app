@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habr_app/stores/habr_storage.dart';
@@ -29,8 +28,9 @@ class Picture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme.bodyText2!;
+    final textTheme = Theme.of(context).textTheme.bodyMedium!;
     final habrStorage = context.watch<HabrStorage>();
+    final SvgTheme svgTheme = SvgTheme(currentColor: textTheme.color!);
     return Container(
       height: height,
       width: width,
@@ -40,7 +40,10 @@ class Picture extends StatelessWidget {
         onRightBuilder: (context, dynamic filePath) {
           final file = File(filePath);
           if (url!.endsWith("svg")) {
-            return SvgPicture.file(file, color: textTheme.color);
+            return SvgPicture.file(
+                file,
+                theme: svgTheme
+            );
           }
           Widget widget = Image.file(
             file,
@@ -56,7 +59,7 @@ class Picture extends StatelessWidget {
         onErrorBuilder: (context, err) {
           logError(err);
           if (url!.endsWith("svg")) {
-            return SvgPicture.network(url!, color: textTheme.color);
+            return SvgPicture.network(url!, theme: svgTheme,);
           }
           Widget widget = Image.network(
             url!,
@@ -74,7 +77,7 @@ class Picture extends StatelessWidget {
 
   _buildClickableImage(
       BuildContext context, Widget child, ImageProvider imgProvider) {
-    final heroTag = url! + LUID.genId().toString();
+    final heroTag = url! + luId.genId().toString();
     return GestureDetector(
       onTap: () {
         Navigator.push(

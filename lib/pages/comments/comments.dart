@@ -59,7 +59,7 @@ class CommentsPage extends StatelessWidget {
         );
       case LoadingState.isCorrupted:
         switch (commentsStorage.lastError.errCode) {
-          case ErrorType.ServerError:
+          case ErrorType.serverError:
             return const Center(child: LotOfEntropy());
           default:
             return Center(

@@ -16,7 +16,7 @@ void openCommentsPage(BuildContext context, String articleId) {
 
 void openSearch(BuildContext context) {
   Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => SearchPage()));
+      .push(MaterialPageRoute(builder: (context) => const SearchPage()));
 }
 
 void openSearchResult(BuildContext context, SearchData info) {
@@ -35,9 +35,9 @@ void openUser(BuildContext context, String username) {
 }
 
 Map<String, WidgetBuilder> routes = {
-  "settings": (BuildContext context) => SettingsPage(),
-  "articles": (BuildContext context) => ArticlesList(),
-  "articles/cached": (BuildContext context) => CachedArticlesList(),
-  "articles/bookmarks": (BuildContext context) => BookmarksArticlesList(),
-  "filters": (BuildContext context) => FiltersPage(),
+  "settings": (BuildContext context) => const SettingsPage(),
+  "articles": (BuildContext context) => const ArticlesList(),
+  "articles/cached": (BuildContext context) => const CachedArticlesList(),
+  "articles/bookmarks": (BuildContext context) => const BookmarksArticlesList(),
+  "filters": (BuildContext context) => const FiltersPage(),
 };

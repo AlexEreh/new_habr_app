@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:habr_app/habr/api.dart';
 import 'package:habr_app/routing/routing.dart';
 import 'package:habr_app/widgets/widgets.dart';
-import '../habr/api.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -21,7 +20,7 @@ class SearchData {
 
 class _SearchPageState extends State<SearchPage> {
   final queryController = TextEditingController();
-  ValueNotifier<Order> orderBy = ValueNotifier(Order.Relevance);
+  ValueNotifier<Order> orderBy = ValueNotifier(Order.relevance);
 
   @override
   void dispose() {
@@ -41,7 +40,7 @@ class _SearchPageState extends State<SearchPage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.search),
-        actions: [],
+        actions: const [],
       ),
       body: Column(
         children: [
@@ -50,7 +49,7 @@ class _SearchPageState extends State<SearchPage> {
               children: [
                 Card(
                   child: Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: TextFormField(
                       textInputAction: TextInputAction.search,
                       onFieldSubmitted: (_) => _onSearch(),
@@ -72,9 +71,9 @@ class _SearchPageState extends State<SearchPage> {
                   groupValue: orderBy,
                   title: AppLocalizations.of(context)!.sort,
                   enumToText: {
-                    Order.Relevance: AppLocalizations.of(context)!.relevance,
-                    Order.Date: AppLocalizations.of(context)!.date,
-                    Order.Rating: AppLocalizations.of(context)!.rating,
+                    Order.relevance: AppLocalizations.of(context)!.relevance,
+                    Order.date: AppLocalizations.of(context)!.date,
+                    Order.rating: AppLocalizations.of(context)!.rating,
                   },
                 ),
               ].map((e) => DefaultConstraints(child: e)).toList(),
@@ -82,7 +81,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
           DefaultConstraints(
             child: Container(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               child: SearchButton(onPressed: _onSearch),
             ),
           ),
@@ -97,22 +96,26 @@ class RadioGroup<Enum> extends StatelessWidget {
   final ValueNotifier<Enum?> groupValue;
   final String? title;
 
-  RadioGroup(
-      {this.title, required this.groupValue, required this.enumToText});
+  const RadioGroup(
+      {super.key,
+      this.title,
+      required this.groupValue,
+      required this.enumToText});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-        child: ValueListenableBuilder<Enum?>(
-      valueListenable: groupValue,
-      builder: (context, group, child) {
-        return Column(
+      child: ValueListenableBuilder<Enum?>(
+        valueListenable: groupValue,
+        builder: (context, group, child) {
+          return Column(
             children: [
-          ListTile(
-            leading: Text(title!),
-            trailing: Icon(Icons.sort),
-          )
-        ]..addAll(enumToText.keys.map<Widget>((e) => RadioListTile(
+              ListTile(
+                leading: Text(title!),
+                trailing: const Icon(Icons.sort),
+              ),
+              ...enumToText.keys.map<Widget>(
+                (e) => RadioListTile(
                   title: Text(enumToText[e]!),
                   // activeColor: Colors.blueGrey,
                   value: e,
@@ -120,8 +123,12 @@ class RadioGroup<Enum> extends StatelessWidget {
                   onChanged: (dynamic value) {
                     groupValue.value = value;
                   },
-                ))));
-      },
-    ));
+                ),
+              )
+            ],
+          );
+        },
+      ),
+    );
   }
 }

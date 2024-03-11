@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:habr_app/widgets/link.dart';
 
@@ -6,7 +7,7 @@ class Spoiler extends StatefulWidget {
   final String? title;
   final Widget? child;
 
-  Spoiler({this.title, this.child});
+  const Spoiler({super.key, this.title, this.child});
 
   @override
   State<StatefulWidget> createState() => _SpoilerState();
@@ -45,12 +46,11 @@ class _SpoilerState extends State<Spoiler> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData themeData = Theme.of(context);
-    return Container(
-        child: Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
+          onTap: onTap,
           child: Row(
             children: [
               AnimatedBuilder(
@@ -71,7 +71,6 @@ class _SpoilerState extends State<Spoiler> with TickerProviderStateMixin {
               ))
             ],
           ),
-          onTap: onTap,
         ),
         SizeTransition(
           sizeFactor: Tween<double>(begin: 0, end: 1)
@@ -83,6 +82,6 @@ class _SpoilerState extends State<Spoiler> with TickerProviderStateMixin {
           ]),
         )
       ],
-    ));
+    );
   }
 }

@@ -20,11 +20,11 @@ class HeroPhotoViewRouteWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final focusNode = FocusNode();
-    return RawKeyboardListener(
+    return KeyboardListener(
       focusNode: focusNode,
       autofocus: true,
-      onKey: (event) {
-        if (event.isKeyPressed(LogicalKeyboardKey.escape)) {
+      onKeyEvent: (event) {
+        if (event.logicalKey == LogicalKeyboardKey.escape) {
           Navigator.of(context).pop();
         }
       },

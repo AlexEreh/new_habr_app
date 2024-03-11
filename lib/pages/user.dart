@@ -1,44 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:habr_app/utils/message_notifier.dart';
-import 'package:habr_app/widgets/link.dart';
-import 'package:provider/provider.dart';
-import 'package:habr_app/stores/habr_storage.dart';
-
-import 'package:habr_app/models/author_info.dart';
-import 'package:habr_app/stores/avatar_color_store.dart';
-import 'package:habr_app/stores/user_info_store.dart';
-import 'package:habr_app/stores/articles_store.dart';
-import 'package:habr_app/widgets/incrementally_loading_listview.dart';
-import '../app_error.dart';
-import '../stores/loading_state.dart';
-import 'package:habr_app/utils/page_loaders/preview_loader.dart';
-import 'package:habr_app/widgets/widgets.dart';
-import 'package:habr_app/routing/routing.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:habr_app/app_error.dart';
+import 'package:habr_app/models/author_info.dart';
+import 'package:habr_app/routing/routing.dart';
+import 'package:habr_app/stores/articles_store.dart';
+import 'package:habr_app/stores/avatar_color_store.dart';
+import 'package:habr_app/stores/habr_storage.dart';
+import 'package:habr_app/stores/loading_state.dart';
+import 'package:habr_app/stores/user_info_store.dart';
 import 'package:habr_app/utils/date_to_text.dart';
+import 'package:habr_app/utils/message_notifier.dart';
+import 'package:habr_app/utils/page_loaders/preview_loader.dart';
+import 'package:habr_app/widgets/incrementally_loading_listview.dart';
+import 'package:habr_app/widgets/link.dart';
+import 'package:habr_app/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class UserPage extends StatelessWidget {
   final String username;
 
-  const UserPage({super.key, required this.username});
+  const UserPage({
+    super.key,
+    required this.username,
+  });
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-              create: (_) =>
-                  ArticlesStorage(UserPreviewsLoader(username))),
-          ChangeNotifierProvider(create: (_) {
-            final store = UserInfoStorage(username);
-            store.loadInfo();
-            return store;
-          }),
-        ],
-        child: Scaffold(
-          appBar: AppBar(title: const UserAppBarTitle()),
-          body: const UserBody(),
-        ));
+      providers: [
+        ChangeNotifierProvider(
+            create: (_) => ArticlesStorage(UserPreviewsLoader(username))),
+        ChangeNotifierProvider(create: (_) {
+          final store = UserInfoStorage(username);
+          store.loadInfo();
+          return store;
+        }),
+      ],
+      child: Scaffold(
+        appBar: AppBar(title: const UserAppBarTitle()),
+        body: const UserBody(),
+      ),
+    );
   }
 }
 
@@ -102,15 +104,14 @@ class UserBody extends StatelessWidget {
         return Column(
           children: [
             AuthorInfoView(info: userStore.info!),
-            const Expanded(
-                child: Center(child: CircularProgressIndicator())),
+            const Expanded(child: Center(child: CircularProgressIndicator())),
           ],
         );
       }
     }
     final err = userStore.lastError ?? articlesStore.lastError!;
     switch (err.errCode) {
-      case ErrorType.ServerError:
+      case ErrorType.serverError:
         return const Center(child: LotOfEntropy());
       default:
         return Center(

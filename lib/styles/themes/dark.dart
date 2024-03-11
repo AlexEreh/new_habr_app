@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'text_theme.dart';
 
 ThemeData buildDarkTheme({
@@ -6,16 +7,18 @@ ThemeData buildDarkTheme({
   double lineSpacing = 1.35,
 }) {
   return ThemeData(
-    textTheme: buildTextTheme(Colors.white70, mainFontSize, lineSpacing),
+    textTheme: buildTextTheme(Colors.white, mainFontSize, lineSpacing),
     hintColor: Colors.grey,
-    appBarTheme: AppBarTheme(
-      color: Colors.blueGrey[600],
+    appBarTheme: const AppBarTheme(
+      color: Colors.black54,
     ),
     primarySwatch: Colors.blueGrey,
     primaryColor: Colors.blueGrey[600],
-    scaffoldBackgroundColor: const Color.fromRGBO(57, 57, 57, 1),
-    colorScheme:
-        const ColorScheme.dark(secondary: Colors.grey, primary: Colors.blueGrey),
+    scaffoldBackgroundColor: const Color.fromRGBO(30, 30, 30, 1.0),
+    colorScheme: const ColorScheme.dark(
+      secondary: Colors.grey,
+      primary: Colors.blueGrey,
+    ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
     snackBarTheme: SnackBarThemeData(
       backgroundColor: Colors.blueGrey[400],

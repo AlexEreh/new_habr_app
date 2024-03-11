@@ -7,7 +7,8 @@ abstract class Filter<T> {
 
 class AnyFilterCombine<T> extends Filter<T> {
   final List<Filter<T>> filters;
-  AnyFilterCombine(this.filters);
+
+  const AnyFilterCombine(this.filters);
 
   @override
   bool filter(T obj) {
@@ -17,7 +18,8 @@ class AnyFilterCombine<T> extends Filter<T> {
 
 class AllFilterCombine<T> extends Filter<T> {
   final List<Filter<T>> filters;
-  AllFilterCombine(this.filters);
+
+  const AllFilterCombine(this.filters);
 
   @override
   bool filter(T obj) {

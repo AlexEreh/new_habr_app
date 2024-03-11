@@ -4,7 +4,11 @@ void logError(Object e, [StackTrace? stackTrace]) {
   if (kDebugMode) {
     print(e.toString());
   }
-  if (stackTrace != null) print(stackTrace);
+  if (stackTrace != null) {
+    if (kDebugMode) {
+      print(stackTrace);
+    }
+  }
 }
 
 void logInfo(Object obj) {

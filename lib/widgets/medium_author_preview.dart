@@ -15,7 +15,7 @@ class MediumAuthorPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final font = theme.textTheme.bodyText2!;
+    final font = theme.textTheme.bodyMedium!;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -39,11 +39,11 @@ class MediumAuthorPreview extends StatelessWidget {
                 TextSpan(children: [
                   if (author.fullName != null) ...[
                     TextSpan(text: author.fullName),
-                    TextSpan(text: ', ')
+                    const TextSpan(text: ', ')
                   ],
                   TextSpan(
                     children: [
-                      TextSpan(text: '@'),
+                      const TextSpan(text: '@'),
                       TextSpan(text: author.alias),
                     ],
                     style: TextStyle(color: linkColorFrom(context)),

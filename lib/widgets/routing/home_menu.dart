@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:habr_app/routing/routing.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:habr_app/utils/platform_helper.dart';
 
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});
@@ -64,7 +61,7 @@ class DesktopHomeMenu extends StatelessWidget {
           DrawerHeader(
             padding: EdgeInsets.zero,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/images/background.png'),
                     fit: BoxFit.cover),

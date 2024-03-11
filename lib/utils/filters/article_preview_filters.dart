@@ -1,5 +1,6 @@
-import 'filter.dart';
 import 'package:habr_app/models/post_preview.dart';
+
+import 'filter.dart';
 
 export 'filter.dart';
 
@@ -35,8 +36,7 @@ class CompanyNameFilter extends Filter<PostPreview> {
   @override
   bool filter(PostPreview obj) {
     final l = companyName.toLowerCase();
-    return obj.hubs
-            ?.any((element) => element.toLowerCase().contains(l)) ??
+    return obj.hubs?.any((element) => element.toLowerCase().contains(l)) ??
         false;
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 
 class ScrollData extends ScrollBehavior {
-  final double? thinkness;
+  final double? thickness;
   final bool? isAlwaysShow;
 
-  const ScrollData({this.thinkness, this.isAlwaysShow});
+  const ScrollData({this.thickness, this.isAlwaysShow});
 
   @override
   Widget buildScrollbar(
@@ -16,7 +16,7 @@ class ScrollData extends ScrollBehavior {
       case TargetPlatform.macOS:
       case TargetPlatform.windows:
         return RawScrollbar(
-          thickness: thinkness,
+          thickness: thickness,
           thumbVisibility: isAlwaysShow,
           controller: details.controller,
           child: child,

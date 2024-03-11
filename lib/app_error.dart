@@ -1,9 +1,9 @@
 enum ErrorType {
-  BadRequest,
-  BadResponse,
-  ServerError,
-  NotFound,
-  NotCached,
+  badRequest,
+  badResponse,
+  serverError,
+  notFound,
+  notCached,
 }
 
 class AppError {

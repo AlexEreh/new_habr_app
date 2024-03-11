@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:habr_app/utils/message_notifier.dart';
-import 'package:provider/provider.dart';
-import 'package:habr_app/utils/page_loaders/preview_loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:habr_app/routing/routing.dart';
+import 'package:habr_app/stores/articles_store.dart';
 import 'package:habr_app/stores/habr_storage.dart';
+import 'package:habr_app/utils/message_notifier.dart';
+import 'package:habr_app/utils/page_loaders/preview_loader.dart';
 import 'package:habr_app/widgets/incrementally_loading_listview.dart';
 import 'package:habr_app/widgets/widgets.dart';
-import 'package:habr_app/stores/articles_store.dart';
-import 'package:habr_app/routing/routing.dart';
+import 'package:provider/provider.dart';
+
 import '../stores/loading_state.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CachedArticlesList extends StatelessWidget {
   const CachedArticlesList({super.key});
@@ -22,8 +23,9 @@ class CachedArticlesList extends StatelessWidget {
         widget = store.previews.isNotEmpty
             ? IncrementallyLoadingListView(
                 itemBuilder: (itemContext, index) {
-                  if (index >= store.previews.length && store.loadItems)
-                    return Center(child: const CircularItem());
+                  if (index >= store.previews.length && store.loadItems) {
+                    return const Center(child: CircularItem());
+                  }
                   final preview = store.previews[index];
                   return DefaultConstraints(
                     child: SlidableDelete(
@@ -48,7 +50,7 @@ class CachedArticlesList extends StatelessWidget {
                   );
                 },
                 separatorBuilder: (context, index) =>
-                    const DefaultConstraints(child: const Hr()),
+                    const DefaultConstraints(child: Hr()),
                 itemCount: () =>
                     store.previews.length + (store.loadItems ? 1 : 0),
                 loadMore: store.loadNextPage,

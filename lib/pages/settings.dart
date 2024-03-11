@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:habr_app/stores/app_settings.dart';
 import 'package:habr_app/widgets/adaptive_ui.dart';
 import 'package:habr_app/widgets/dropdown_list_tile.dart';
 import 'package:habr_app/widgets/html_elements/highlight_code.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -45,7 +45,8 @@ class Settings extends StatelessWidget {
                 title: Text(localizations.systemTheme),
                 secondary: const Icon(Icons.brightness_auto),
                 value: themeMode == ThemeMode.system,
-                onChanged: !settings.timeThemeSwitcher? (val) {
+                onChanged: !settings.timeThemeSwitcher
+                    ? (val) {
                         if (val) {
                           settings.themeMode = ThemeMode.system;
                         } else {
@@ -59,7 +60,8 @@ class Settings extends StatelessWidget {
                 secondary: const Icon(Icons.brightness_2),
                 value: themeMode == ThemeMode.dark,
                 onChanged:
-                    themeMode != ThemeMode.system && !settings.timeThemeSwitcher? (val) {
+                    themeMode != ThemeMode.system && !settings.timeThemeSwitcher
+                        ? (val) {
                             if (val) {
                               settings.themeMode = ThemeMode.dark;
                             } else {
@@ -247,11 +249,13 @@ class TimeOfDayPickerButton extends StatelessWidget {
   final TimeOfDay? timeOfDay;
   final void Function(TimeOfDay value) onChange;
 
-  const TimeOfDayPickerButton(
-      {super.key, required this.timeOfDay,
-      required this.onChange,
-      this.label,
-      this.active});
+  const TimeOfDayPickerButton({
+    super.key,
+    required this.timeOfDay,
+    required this.onChange,
+    this.label,
+    this.active,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:habr_app/models/post_preview.dart';
 import 'package:habr_app/stores/filters_store.dart';
 import 'package:habr_app/utils/filters/article_preview_filters.dart';
 import 'package:habr_app/utils/log.dart';
 import 'package:habr_app/widgets/adaptive_ui.dart';
-import 'package:itertools/itertools.dart';
 import 'package:hive/hive.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:itertools/itertools.dart';
 import 'package:tuple_dart/tuple.dart';
 
 class FiltersPage extends StatefulWidget {
@@ -83,13 +83,13 @@ class _FiltersPageState extends State<FiltersPage> {
             children: <Widget>[
               SimpleDialogOption(
                 onPressed: () {
-                  Navigator.pop(context, _DialogType.AuthorNickname);
+                  Navigator.pop(context, _DialogType.authorNickname);
                 },
                 child: Text(AppLocalizations.of(context)!.authorNicknameFilter),
               ),
               SimpleDialogOption(
                 onPressed: () {
-                  Navigator.pop(context, _DialogType.CompanyName);
+                  Navigator.pop(context, _DialogType.companyName);
                 },
                 child: Text(AppLocalizations.of(context)!.companyNameFilter),
               ),
@@ -100,10 +100,10 @@ class _FiltersPageState extends State<FiltersPage> {
     if (type == null) return;
 
     switch (type) {
-      case _DialogType.AuthorNickname:
+      case _DialogType.authorNickname:
         await _createAuthorNicknameFilter();
         break;
-      case _DialogType.CompanyName:
+      case _DialogType.companyName:
         await _createCompanyNameFilter();
         break;
       default:
@@ -113,18 +113,20 @@ class _FiltersPageState extends State<FiltersPage> {
 
   Future<void> _createAuthorNicknameFilter() async {
     await showDialog<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return _AuthorNicknameFilterDialog();
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return _AuthorNicknameFilterDialog();
+      },
+    );
   }
 
   Future<void> _createCompanyNameFilter() async {
     await showDialog<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return _CompanyNameFilterDialog();
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return _CompanyNameFilterDialog();
+      },
+    );
   }
 }
 
@@ -135,7 +137,8 @@ class FiltersGroup<FilterT extends Filter<PostPreview>>
   final Widget Function(FilterT) titleBuilder;
   final void Function() Function(int) onRemoveBuilder;
 
-  const FiltersGroup({super.key,
+  const FiltersGroup({
+    super.key,
     required this.filters,
     required this.leading,
     required this.titleBuilder,
@@ -150,12 +153,13 @@ class FiltersGroup<FilterT extends Filter<PostPreview>>
           final index = tuple.item1;
           final filter = tuple.item2;
           return ListTile(
-              leading: leading,
-              title: titleBuilder(filter),
-              trailing: IconButton(
-                icon: const Icon(Icons.clear),
-                onPressed: onRemoveBuilder(index),
-              ));
+            leading: leading,
+            title: titleBuilder(filter),
+            trailing: IconButton(
+              icon: const Icon(Icons.clear),
+              onPressed: onRemoveBuilder(index),
+            ),
+          );
         }).toList(growable: false),
       ),
     );
@@ -163,9 +167,8 @@ class FiltersGroup<FilterT extends Filter<PostPreview>>
 }
 
 enum _DialogType {
-  AuthorNickname,
-  CompanyName,
-  Rating,
+  authorNickname,
+  companyName,
   // other
 }
 
@@ -176,16 +179,16 @@ class _AuthorNicknameFilterDialog extends StatefulWidget {
 
 class _AuthorNicknameFilterDialogState
     extends State<_AuthorNicknameFilterDialog> {
-  TextEditingController? nickanameControll;
+  TextEditingController? nicknameController;
 
   @override
   void initState() {
     super.initState();
-    nickanameControll = TextEditingController();
+    nicknameController = TextEditingController();
   }
 
   bool nicknameValid() {
-    return nickanameControll!.text.isNotEmpty;
+    return nicknameController!.text.isNotEmpty;
   }
 
   @override
@@ -196,7 +199,7 @@ class _AuthorNicknameFilterDialogState
         children: [
           Expanded(
             child: TextField(
-              controller: nickanameControll,
+              controller: nicknameController,
               autofocus: true,
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context)!.authorNickname,
@@ -208,18 +211,21 @@ class _AuthorNicknameFilterDialogState
       ),
       actions: <Widget>[
         TextButton(
-            child: Text(AppLocalizations.of(context)!.cancel),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
+          child: Text(AppLocalizations.of(context)!.cancel),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         TextButton(
-            child: Text(AppLocalizations.of(context)!.create),
-            onPressed: () {
-              if (nicknameValid())
-                FiltersStorage()
-                    .addFilter(NicknameAuthorFilter(nickanameControll!.text));
-              Navigator.pop(context);
-            })
+          child: Text(AppLocalizations.of(context)!.create),
+          onPressed: () {
+            if (nicknameValid()) {
+              FiltersStorage()
+                  .addFilter(NicknameAuthorFilter(nicknameController!.text));
+            }
+            Navigator.pop(context);
+          },
+        )
       ],
     );
   }
@@ -231,16 +237,16 @@ class _CompanyNameFilterDialog extends StatefulWidget {
 }
 
 class _CompanyNameFilterDialogState extends State<_CompanyNameFilterDialog> {
-  TextEditingController? nickanameControll;
+  TextEditingController? nicknameController;
 
   @override
   void initState() {
     super.initState();
-    nickanameControll = TextEditingController();
+    nicknameController = TextEditingController();
   }
 
   bool nicknameValid() {
-    return nickanameControll!.text.isNotEmpty;
+    return nicknameController!.text.isNotEmpty;
   }
 
   @override
@@ -251,7 +257,7 @@ class _CompanyNameFilterDialogState extends State<_CompanyNameFilterDialog> {
         children: [
           Expanded(
             child: TextField(
-              controller: nickanameControll,
+              controller: nicknameController,
               autofocus: true,
               decoration: const InputDecoration(
                 labelText: "Имя компании",
@@ -263,18 +269,21 @@ class _CompanyNameFilterDialogState extends State<_CompanyNameFilterDialog> {
       ),
       actions: <Widget>[
         TextButton(
-            child: Text(AppLocalizations.of(context)!.cancel),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
+          child: Text(AppLocalizations.of(context)!.cancel),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         TextButton(
-            child: Text(AppLocalizations.of(context)!.create),
-            onPressed: () {
-              if (nicknameValid())
-                FiltersStorage()
-                    .addFilter(CompanyNameFilter(nickanameControll!.text));
-              Navigator.pop(context);
-            })
+          child: Text(AppLocalizations.of(context)!.create),
+          onPressed: () {
+            if (nicknameValid()) {
+              FiltersStorage()
+                  .addFilter(CompanyNameFilter(nicknameController!.text));
+            }
+            Navigator.pop(context);
+          },
+        )
       ],
     );
   }

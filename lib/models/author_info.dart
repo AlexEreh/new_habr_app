@@ -6,16 +6,12 @@ class AuthorInfo {
   final String? speciality;
   final String? about;
   final AuthorAvatarInfo? avatar;
-
   final int postCount;
   final int? followCount;
-  final int? folowersCount;
-
+  final int? followersCount;
   final DateTime lastActivityTime;
   final DateTime registerTime;
-
   final int? rating;
-
   final num? karma;
 
   const AuthorInfo({
@@ -26,7 +22,7 @@ class AuthorInfo {
     this.avatar,
     required this.postCount,
     this.followCount,
-    this.folowersCount,
+    this.followersCount,
     required this.lastActivityTime,
     required this.registerTime,
     this.rating,

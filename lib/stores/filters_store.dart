@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
 import 'package:habr_app/models/post_preview.dart';
 import 'package:habr_app/utils/filters/filter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class FiltersStorage {
   static const _boxName = 'filters';

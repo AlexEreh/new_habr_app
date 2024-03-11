@@ -19,7 +19,7 @@ class PostPreviewAdapter extends TypeAdapter<PostPreview> {
       id: id,
       title: title,
       flows: flows,
-      corporative: corporative,
+      isCorporative: corporative,
       publishDate: publishDate,
       author: author,
       statistics: const Statistics.zero(),
@@ -31,7 +31,7 @@ class PostPreviewAdapter extends TypeAdapter<PostPreview> {
     writer.write(obj.id);
     writer.write(obj.title);
     writer.writeList(obj.flows);
-    writer.write(obj.corporative);
+    writer.write(obj.isCorporative);
     writer.write(obj.publishDate);
     writer.write(obj.author);
   }

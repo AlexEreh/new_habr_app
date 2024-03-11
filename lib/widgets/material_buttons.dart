@@ -6,7 +6,13 @@ class MaterialButton extends StatelessWidget {
   final IconData? iconData;
   final String? text;
 
-  const MaterialButton({super.key, this.onPressed, this.color, this.iconData, this.text});
+  const MaterialButton({
+    super.key,
+    this.onPressed,
+    this.color,
+    this.iconData,
+    this.text,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +74,10 @@ class SearchButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-        onPressed: onPressed,
-        color: color,
-        iconData: Icons.search,
-        text: "Поиск");
+      onPressed: onPressed,
+      color: color,
+      iconData: Icons.search,
+      text: "Поиск",
+    );
   }
 }

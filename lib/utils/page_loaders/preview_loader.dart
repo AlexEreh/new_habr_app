@@ -10,10 +10,8 @@ import 'page_loader.dart';
 export 'page_loader.dart';
 
 class CachedPreviewLoader extends FlowPreviewLoader {
-  @override
-  final HabrStorage storage;
-  CachedPreviewLoader({required this.storage})
-      : super(flow: PostsFlow.saved, storage: storage);
+  CachedPreviewLoader({required super.storage})
+      : super(flow: PostsFlow.saved);
 }
 
 class FlowPreviewLoader extends PageLoader<Either<AppError, PostPreviews>> {
